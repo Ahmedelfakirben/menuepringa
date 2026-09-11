@@ -8,8 +8,11 @@
     <!-- FAVICON -->
     <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
     <link rel="apple-touch-icon" href="assets/logo.jpg">
-    <meta name="theme-color" content="#B28A43">
-    <meta name="description" content="House Publique — Café & Restaurant. Carte gastronomique complète.">
+    <!-- NO-CACHE & FORZAR ACTUALIZACIÓN FRESCA (OLVIDAR COOKIES Y CACHÉ) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="robots" content="noarchive">
     
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +69,7 @@
             font-style: italic;
         }
 
-        /* Tarjetas con relieve dorado y textura */
+        /* Tarjetas de menú con relieve dorado */
         .art-card {
             background: #FFFFFF;
             border: 1px solid rgba(178, 138, 67, 0.20);
@@ -81,6 +84,35 @@
             transform: translateY(-2px);
             border-color: rgba(194, 155, 79, 0.5);
             box-shadow: 0 10px 24px -4px rgba(178, 138, 67, 0.15);
+        }
+
+        /* Polaroid Artístico con Chincheta/Sombra realista */
+        .polaroid-art {
+            background: #FFFFFF;
+            padding: 10px 10px 20px 10px;
+            border-radius: 6px;
+            box-shadow: 0 10px 26px -4px rgba(35, 25, 15, 0.16), 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            position: relative;
+        }
+        .polaroid-art:hover {
+            transform: scale(1.02) rotate(0deg) !important;
+            box-shadow: 0 16px 36px -6px rgba(35, 25, 15, 0.22);
+        }
+
+        /* Cinta adhesiva vintage (Washi Tape effect) */
+        .tape-effect {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 76px;
+            height: 20px;
+            background: rgba(225, 215, 195, 0.80);
+            border: 1px dashed rgba(160, 140, 110, 0.45);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            z-index: 10;
         }
 
         .badge-price {
@@ -109,6 +141,23 @@
             border-color: transparent !important;
             box-shadow: 0 4px 14px rgba(143, 106, 42, 0.32);
             font-weight: 700;
+        }
+
+        /* Desplegable personalizado de idiomas en el header */
+        #lang-menu-panel {
+            box-shadow: 0 12px 30px -4px rgba(74, 62, 54, 0.18), 0 4px 12px rgba(178, 138, 67, 0.15);
+            animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes dropdownFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         /* PÁGINAS DEL LIBRO: Solo la activa es visible para evitar espacios en blanco gigantes */
@@ -200,7 +249,7 @@
         </div>
     </div>
 
-    <!-- ═══ HEADER PRINCIPAL (STICKY) CON DESPLEGABLE COMPACTO DE IDIOMAS ═══ -->
+    <!-- ═══ HEADER PRINCIPAL CON DESPLEGABLE ELEGANTE DE IDIOMAS ═══ -->
     <header class="sticky top-0 z-50 bg-[#F8F4EB]/95 backdrop-blur-md border-b border-hp-kraft/20 py-2.5 px-4 transition-all">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2.5">
@@ -211,92 +260,135 @@
                 </div>
             </div>
 
-            <!-- DESPLEGABLE ÚNICO DE IDIOMAS (LIBERA ESPACIO EN EL HEADER) -->
-            <div class="relative">
-                <div class="flex items-center bg-white border border-hp-gold/35 rounded-full pl-2.5 pr-2 py-1 shadow-xs hover:border-hp-kraft transition-all">
-                    <i class="fa-solid fa-globe text-hp-gold text-xs mr-1.5"></i>
-                    <select id="lang-select" onchange="setLang(this.value)" class="bg-transparent text-xs font-bold text-hp-ink focus:outline-none cursor-pointer pr-0.5">
-                        <option value="fr">FR</option>
-                        <option value="es">ES</option>
-                        <option value="ar">عربي</option>
-                        <option value="en">EN</option>
-                    </select>
+            <!-- DESPLEGABLE PERSONALIZADO DE IDIOMAS DE ALTA GAMA (HEADER) -->
+            <div class="relative" id="custom-lang-dropdown">
+                <button id="lang-menu-btn" type="button" onclick="toggleLangMenu(event)" class="flex items-center gap-2 bg-white border border-hp-gold/40 hover:border-hp-kraft px-3 py-1.5 rounded-full shadow-xs text-xs font-cinzel font-bold text-hp-ink transition-all active:scale-95 cursor-pointer">
+                    <i class="fa-solid fa-globe text-hp-gold text-xs"></i>
+                    <span id="current-lang-code" class="tracking-wider">FR</span>
+                    <i class="fa-solid fa-chevron-down text-[8px] text-hp-stone/70 transition-transform duration-200" id="lang-chevron"></i>
+                </button>
+                
+                <!-- PANEL FLOTANTE DE IDIOMAS (SIN ASPECTO 'CATETO' DE NAVEGADOR) -->
+                <div id="lang-menu-panel" class="hidden absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-44 bg-[#FCFAF6] border border-hp-gold/35 rounded-2xl shadow-xl backdrop-blur-md py-1.5 z-50 transition-all divide-y divide-hp-gold/10">
+                    <button type="button" onclick="selectLang('fr')" class="lang-option w-full flex items-center justify-between px-3.5 py-2 text-xs font-cinzel hover:bg-hp-gold/10 text-hp-ink transition-colors cursor-pointer" data-lang="fr">
+                        <span class="flex items-center gap-2">
+                            <span class="text-sm">🇫🇷</span>
+                            <span class="font-bold">Français</span>
+                        </span>
+                        <i class="fa-solid fa-check text-hp-gold text-xs lang-check"></i>
+                    </button>
+                    <button type="button" onclick="selectLang('es')" class="lang-option w-full flex items-center justify-between px-3.5 py-2 text-xs font-cinzel hover:bg-hp-gold/10 text-hp-ink transition-colors cursor-pointer" data-lang="es">
+                        <span class="flex items-center gap-2">
+                            <span class="text-sm">🇪🇸</span>
+                            <span class="font-bold">Español</span>
+                        </span>
+                        <i class="fa-solid fa-check text-hp-gold text-xs lang-check hidden"></i>
+                    </button>
+                    <button type="button" onclick="selectLang('ar')" class="lang-option w-full flex items-center justify-between px-3.5 py-2 text-xs font-cinzel hover:bg-hp-gold/10 text-hp-ink transition-colors font-arabic cursor-pointer" data-lang="ar">
+                        <span class="flex items-center gap-2">
+                            <span class="text-sm">🇲🇦</span>
+                            <span class="font-bold text-sm">العربية</span>
+                        </span>
+                        <i class="fa-solid fa-check text-hp-gold text-xs lang-check hidden"></i>
+                    </button>
+                    <button type="button" onclick="selectLang('en')" class="lang-option w-full flex items-center justify-between px-3.5 py-2 text-xs font-cinzel hover:bg-hp-gold/10 text-hp-ink transition-colors cursor-pointer" data-lang="en">
+                        <span class="flex items-center gap-2">
+                            <span class="text-sm">🇬🇧</span>
+                            <span class="font-bold">English</span>
+                        </span>
+                        <i class="fa-solid fa-check text-hp-gold text-xs lang-check hidden"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- ═══ HÉROE PRINCIPAL ═══ -->
-    <section class="relative pt-6 pb-2 px-4 text-center">
-        <div class="max-w-3xl mx-auto flex flex-col items-center">
-            <div class="relative mb-3">
-                <div class="absolute -inset-2 bg-gradient-to-r from-hp-gold via-hp-kraft to-hp-gold rounded-full blur-md opacity-30 animate-pulse"></div>
-                <img src="assets/logo.jpg" alt="House Publique Crest" class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-white shadow-xl">
+    <!-- ═══ HÉROE PRINCIPAL DE IMPACTO (PANTALLA COMPLETA INICIAL: SOLO LOGO Y SLOGAN) ═══ -->
+    <section class="relative min-h-[calc(100vh-62px)] flex flex-col items-center justify-between px-4 text-center py-8">
+        <div class="w-full"></div> <!-- Spacer top -->
+        
+        <div class="max-w-xl mx-auto flex flex-col items-center justify-center my-auto">
+            <!-- Logo Grande y Prestigioso con Impacto Visual -->
+            <div class="relative mb-5 group">
+                <div class="absolute -inset-4 bg-gradient-to-r from-hp-gold/30 via-hp-kraft/20 to-hp-gold/30 rounded-full blur-xl opacity-60 animate-pulse"></div>
+                <div class="relative w-36 h-36 sm:w-48 sm:h-48 rounded-full p-2 border-2 border-hp-gold/45 shadow-2xl bg-white/95">
+                    <img src="assets/logo.jpg" alt="House Publique Crest" class="w-full h-full rounded-full object-cover shadow-inner">
+                </div>
             </div>
 
-            <h1 class="font-cinzel text-2xl sm:text-4xl font-bold tracking-wider text-hp-ink mb-1">
+            <h1 class="font-cinzel text-3xl sm:text-5xl font-bold tracking-[0.18em] text-hp-ink mb-1.5">
                 HOUSE PUBLIQUE
             </h1>
-            <p id="ui-slogan" class="font-script text-xl sm:text-2xl text-hp-kraft max-w-lg mb-3">
+            <p id="ui-tagline-hero" class="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-hp-kraft font-bold mb-3">Café & Restaurant</p>
+            <p id="ui-slogan" class="font-script text-2xl sm:text-4xl text-hp-kraft max-w-md mb-6 leading-relaxed">
                 « Savourez chaque instant, du matin au soir »
             </p>
 
-            <!-- Buscador Rápido -->
-            <div class="w-full max-w-md relative mb-2">
-                <div class="relative flex items-center">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 text-hp-stone/50 text-sm"></i>
-                    <input type="text" id="menu-search" oninput="handleSearch(this.value)" placeholder="Rechercher un plat, ingrédient ou boisson..." 
-                        class="w-full pl-11 pr-10 py-2.5 bg-white border border-hp-gold/30 rounded-2xl text-xs sm:text-sm text-hp-ink placeholder-hp-stone/50 focus:outline-none focus:ring-2 focus:ring-hp-gold/50 shadow-sm transition-all">
-                    <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-3 text-hp-stone/40 hover:text-hp-stone text-sm p-1">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
+            <!-- Separador delicado -->
+            <div class="flex items-center gap-3 w-36 mx-auto mb-7">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent to-hp-gold/50"></div>
+                <span class="text-hp-gold text-xs">✦</span>
+                <div class="flex-1 h-px bg-gradient-to-l from-transparent to-hp-gold/50"></div>
             </div>
+
+            <!-- Botón Elegante para Descubrir la Carta -->
+            <button onclick="scrollToMenu(event)" class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full border border-hp-gold/40 bg-white hover:bg-hp-gold/10 text-hp-kraft hover:text-hp-ink font-cinzel text-xs uppercase tracking-widest font-bold shadow-md hover:shadow-lg hover:border-hp-kraft transition-all active:scale-95 cursor-pointer group">
+                <span id="ui-discover-btn">Découvrir la carte</span>
+                <i class="fa-solid fa-chevron-down text-[10px] text-hp-gold group-hover:translate-y-0.5 transition-transform"></i>
+            </button>
+        </div>
+
+        <!-- Indicador de Scroll hacia abajo -->
+        <div class="pt-4 pb-2">
+            <button onclick="scrollToMenu(event)" class="text-hp-stone/50 hover:text-hp-kraft transition-colors flex flex-col items-center gap-1 cursor-pointer">
+                <span class="text-[9px] uppercase font-cinzel tracking-widest text-hp-stone/60">Scroll</span>
+                <i class="fa-solid fa-arrow-down-long text-xs text-hp-gold animate-bounce"></i>
+            </button>
         </div>
     </section>
 
-    <!-- ═══ BARRA DE CATEGORÍAS ELEGANTE (SIN EMOJIS) ═══ -->
-    <div class="sticky top-[53px] z-40 bg-[#F8F4EB]/95 backdrop-blur-md border-b border-hp-kraft/20 py-2 shadow-xs">
+    <!-- ═══ BARRA DE CATEGORÍAS ELEGANTE (STICKY AL HACER SCROLL) ═══ -->
+    <div id="category-bar-wrapper" class="sticky top-[56px] z-40 bg-[#F8F4EB]/95 backdrop-blur-md border-y border-hp-kraft/20 py-2.5 shadow-xs">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5" id="category-bar">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5" id="category-bar">
     
-                <button onclick="goToPage(0)" id="btn-page-0" data-page="0" class="cat-chip active px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(0)" id="btn-page-0" data-page="0" class="cat-chip active px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Petit Déjeuner
                 </button>
         
-                <button onclick="goToPage(1)" id="btn-page-1" data-page="1" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(1)" id="btn-page-1" data-page="1" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Cuisine Marocaine
                 </button>
         
-                <button onclick="goToPage(2)" id="btn-page-2" data-page="2" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(2)" id="btn-page-2" data-page="2" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Plats & Grillades
                 </button>
         
-                <button onclick="goToPage(3)" id="btn-page-3" data-page="3" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(3)" id="btn-page-3" data-page="3" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Pâtes & Lasagnes
                 </button>
         
-                <button onclick="goToPage(4)" id="btn-page-4" data-page="4" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(4)" id="btn-page-4" data-page="4" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Burgers & Tacos
                 </button>
         
-                <button onclick="goToPage(5)" id="btn-page-5" data-page="5" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(5)" id="btn-page-5" data-page="5" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Pizzas Artisanales
                 </button>
         
-                <button onclick="goToPage(6)" id="btn-page-6" data-page="6" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(6)" id="btn-page-6" data-page="6" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Salades Fraîches
                 </button>
         
-                <button onclick="goToPage(7)" id="btn-page-7" data-page="7" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(7)" id="btn-page-7" data-page="7" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Jus & Cocktails
                 </button>
         
-                <button onclick="goToPage(8)" id="btn-page-8" data-page="8" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(8)" id="btn-page-8" data-page="8" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Cafés & Thés
                 </button>
         
-                <button onclick="goToPage(9)" id="btn-page-9" data-page="9" class="cat-chip  px-3.5 py-1.5 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel">
+                <button onclick="goToPage(9)" id="btn-page-9" data-page="9" class="cat-chip  px-4 py-2 rounded-full border border-hp-gold/30 bg-white text-hp-ink font-cinzel flex-shrink-0 shadow-xs hover:border-hp-kraft transition-all cursor-pointer">
                     Desserts Maison
                 </button>
         
@@ -307,57 +399,65 @@
     <!-- ANCLA PARA SCROLL SUAVE -->
     <div id="book-top-anchor"></div>
 
-    <!-- ═══ BARRA DE NAVEGACIÓN TIPO LIBRO (PAGINADOR ELEGANTE) ═══ -->
-    <div class="max-w-6xl mx-auto px-4 pt-4">
-        <div class="flex items-center justify-between bg-white/80 border border-hp-gold/25 rounded-2xl px-4 py-2 text-xs text-hp-stone shadow-xs">
-            <button onclick="prevPage()" class="flex items-center gap-1.5 font-cinzel font-semibold hover:text-hp-kraft transition-colors p-1">
-                <i class="fa-solid fa-chevron-left text-[10px]"></i>
-                <span id="btn-prev-text">Précédent</span>
-            </button>
-
-            <div class="flex items-center gap-2">
-                <span class="text-hp-gold text-xs">✦</span>
-                <span id="book-page-indicator" class="font-cinzel font-bold text-hp-ink tracking-wider text-xs">Page 1 sur 10</span>
-                <span class="text-hp-gold text-xs">✦</span>
-            </div>
-
-            <button onclick="nextPage()" class="flex items-center gap-1.5 font-cinzel font-semibold hover:text-hp-kraft transition-colors p-1">
-                <span id="btn-next-text">Suivant</span>
-                <i class="fa-solid fa-chevron-right text-[10px]"></i>
-            </button>
-        </div>
-
-        <!-- Indicador de deslizamiento táctil -->
-        <p id="ui-swipe-hint" class="text-center text-[11px] text-hp-stone/60 italic mt-2">
+    <!-- Indicador de deslizamiento táctil -->
+    <div class="max-w-6xl mx-auto px-4 pt-3 pb-1">
+        <p id="ui-swipe-hint" class="text-center text-[11px] text-hp-stone/60 italic">
             Glissez avec le doigt vers la gauche ou la droite pour tourner les pages
         </p>
     </div>
 
     <!-- ═══ CONTENEDOR DE PÁGINAS DEL LIBRO (CON SOPORTE SWIPE TÁCTIL) ═══ -->
-    <div class="max-w-6xl mx-auto pt-3 px-2" id="book-pages-wrapper">
+    <div class="max-w-6xl mx-auto pt-2 px-2" id="book-pages-wrapper">
     
             <!-- ═════ PÁGINA 1 : Petit Déjeuner ═════ -->
             <div id="page-0" data-page-index="0" class="book-page active-page">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> I
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="0">
-                            Petit Déjeuner
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="0">
-                            « Le réveil gourmand & brunch »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> I
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="0">
+                                Petit Déjeuner
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="0">
+                                « Le réveil gourmand & brunch »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8 max-w-2xl mx-auto items-center">
+                        <!-- Polaroid 1: Tostada Aguacate -->
+                        <div class="polaroid-art -rotate-1 mx-auto max-w-[240px] w-full">
+                            <div class="tape-effect"></div>
+                            <img src="assets/dish_avocado_toast.jpg" alt="Toast Avocat House Publique" class="w-full h-44 object-cover rounded">
+                            <p id="ui-toast-caption" class="font-script text-xl text-center text-hp-kraft-dark mt-2.5">L'art du petit déjeuner gourmand</p>
+                        </div>
+                        <!-- Polaroid 2: Omelette dorée -->
+                        <div class="polaroid-art rotate-1 mx-auto max-w-[240px] w-full">
+                            <div class="tape-effect"></div>
+                            <img src="assets/dish_omelette.jpg" alt="Omelette dorée House Publique" class="w-full h-44 object-cover rounded">
+                            <p id="ui-omelette-caption" class="font-script text-xl text-center text-hp-kraft-dark mt-2.5">Omelettes dorées au beurre frais</p>
+                        </div>
+                    </div>
+            
                     <div class="mb-6">
                         <h3 class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-hp-kraft-dark mb-3 pb-1 border-b border-hp-gold/15 flex items-center gap-2">
                             <span>✧</span> Formules Complètes
@@ -845,24 +945,41 @@
             <div id="page-1" data-page-index="1" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> II
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="1">
-                            Cuisine Marocaine
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="1">
-                            « La tradition dans toute sa splendeur »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> II
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="1">
+                                Cuisine Marocaine
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="1">
+                                « La tradition dans toute sa splendeur »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
+                    <div class="mb-7 text-center">
+                        <img src="assets/sketch_friends.jpg" alt="Convivialité House Publique" class="w-64 sm:w-72 mx-auto mix-blend-multiply rounded-lg opacity-90">
+                        <p id="ui-friends-caption" class="font-script text-xl text-hp-kraft mt-1">Moments chaleureux en famille ou entre amis</p>
+                    </div>
+            
                     <div class="mb-6">
                         <h3 class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-hp-kraft-dark mb-3 pb-1 border-b border-hp-gold/15 flex items-center gap-2">
                             <span>✧</span> Tajines & Spécialités Marocaines
@@ -1125,22 +1242,34 @@
             <div id="page-2" data-page-index="2" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> III
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="2">
-                            Plats & Grillades
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="2">
-                            « La perfection du feu et des saveurs »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> III
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="2">
+                                Plats & Grillades
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="2">
+                                « La perfection du feu et des saveurs »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -1265,22 +1394,34 @@
             <div id="page-3" data-page-index="3" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> IV
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="3">
-                            Pâtes & Lasagnes
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="3">
-                            « Al dente, généreuses & crémeuses »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> IV
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="3">
+                                Pâtes & Lasagnes
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="3">
+                                « Al dente, généreuses & crémeuses »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -1391,22 +1532,34 @@
             <div id="page-4" data-page-index="4" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> V
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="4">
-                            Burgers & Tacos
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="4">
-                            « Saveurs urbaines avec frites »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> V
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="4">
+                                Burgers & Tacos
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="4">
+                                « Saveurs urbaines avec frites »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -1615,22 +1768,34 @@
             <div id="page-5" data-page-index="5" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> VI
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="5">
-                            Pizzas Artisanales
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="5">
-                            « Pâte croustillante & mozzarella »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> VI
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="5">
+                                Pizzas Artisanales
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="5">
+                                « Pâte croustillante & mozzarella »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -1769,22 +1934,34 @@
             <div id="page-6" data-page-index="6" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> VII
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="6">
-                            Salades Fraîches
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="6">
-                            « Légèreté, fraîcheur & vitamines »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> VII
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="6">
+                                Salades Fraîches
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="6">
+                                « Légèreté, fraîcheur & vitamines »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -1881,22 +2058,34 @@
             <div id="page-7" data-page-index="7" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> VIII
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="7">
-                            Jus & Cocktails
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="7">
-                            « Fruits frais pressés minute »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> VIII
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="7">
+                                Jus & Cocktails
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="7">
+                                « Fruits frais pressés minute »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -2285,24 +2474,53 @@
             <div id="page-8" data-page-index="8" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> IX
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="8">
-                            Cafés & Thés
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="8">
-                            « Torréfaction d'exception & infusions »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> IX
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="8">
+                                Cafés & Thés
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="8">
+                                « Torréfaction d'exception & infusions »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mb-7 max-w-xl mx-auto">
+                        <!-- Polaroid Grande Barista Real -->
+                        <div class="polaroid-art -rotate-1 max-w-[220px] w-full">
+                            <div class="tape-effect"></div>
+                            <img src="assets/cafe_polaroid.jpg" alt="Café Barista House Publique" class="w-full h-36 object-cover rounded">
+                            <p class="font-script text-xl text-center text-hp-kraft-dark mt-2">Passion Barista</p>
+                        </div>
+                        <!-- Boceto lector -->
+                        <div class="flex items-center gap-3 p-4 bg-white/70 rounded-2xl border border-hp-gold/20 max-w-xs shadow-xs">
+                            <img src="assets/sketch_reader.jpg" alt="Lecteur Café" class="w-14 h-14 object-contain mix-blend-multiply">
+                            <div class="text-left rtl:text-right">
+                                <p id="ui-reader-caption" class="font-script text-xl text-hp-kraft-dark">L'instant café & détente</p>
+                                <p class="font-cinzel text-[10px] text-hp-stone">Une pause de pure sérénité</p>
+                            </div>
+                        </div>
+                    </div>
+            
                     <div class="mb-6">
                         <h3 class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-hp-kraft-dark mb-3 pb-1 border-b border-hp-gold/15 flex items-center gap-2">
                             <span>✧</span> Cafés de Sélection, Thés & Boissons
@@ -2471,22 +2689,34 @@
             <div id="page-9" data-page-index="9" class="book-page ">
                 <div class="bg-white/40 border border-hp-gold/25 rounded-3xl p-4 sm:p-7 shadow-xs">
                     
-                    <!-- Encabezado de Capítulo de Lujo (Sin emojis) -->
-                    <div class="text-center mb-6">
-                        <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
-                            <span class="ui-chap-label">Chapitre</span> X
-                        </p>
-                        <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-1 cat-page-title" data-cat-index="9">
-                            Desserts Maison
-                        </h2>
-                        <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="9">
-                            « La note sucrée pour terminer »
-                        </p>
-                        <div class="flex items-center justify-center gap-3 w-28 mx-auto mt-2.5">
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
-                            <span class="text-hp-gold text-xs">✦</span>
-                            <div class="flex-1 h-px bg-hp-gold/40"></div>
+                    <!-- Encabezado de Capítulo con botones Précédent y Suivant a los lados -->
+                    <div class="relative flex items-center justify-between max-w-xl mx-auto mb-6 px-1">
+                        <button onclick="prevPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Précédent">
+                            <i class="fa-solid fa-chevron-left text-[11px]"></i>
+                            <span class="hidden sm:inline ui-btn-prev-text">Précédent</span>
+                        </button>
+
+                        <div class="text-center px-3 flex-1">
+                            <p class="font-cinzel text-[11px] uppercase tracking-[0.3em] text-hp-kraft font-bold">
+                                <span class="ui-chap-label">Chapitre</span> X
+                            </p>
+                            <h2 class="font-cinzel text-xl sm:text-3xl font-bold tracking-wider text-hp-ink mt-0.5 cat-page-title" data-cat-index="9">
+                                Desserts Maison
+                            </h2>
+                            <p class="font-script text-xl sm:text-2xl text-hp-kraft mt-0.5 cat-page-sub" data-cat-index="9">
+                                « La note sucrée pour terminer »
+                            </p>
+                            <div class="flex items-center justify-center gap-3 w-24 mx-auto mt-2">
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                                <span class="text-hp-gold text-xs">✦</span>
+                                <div class="flex-1 h-px bg-hp-gold/40"></div>
+                            </div>
                         </div>
+
+                        <button onclick="nextPage()" class="flex items-center gap-1 px-3 py-1.5 rounded-full border border-hp-gold/30 bg-white/90 hover:bg-white text-hp-kraft hover:text-hp-ink text-xs font-cinzel font-bold shadow-xs hover:border-hp-kraft transition-all active:scale-95 flex-shrink-0" title="Suivant">
+                            <span class="hidden sm:inline ui-btn-next-text">Suivant</span>
+                            <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                        </button>
                     </div>
         
                     <div class="mb-6">
@@ -2641,7 +2871,36 @@
 
     <!-- ═══ SCRIPTS DE NAVEGACIÓN LIBRO, SWIPE E IDIOMAS ═══ -->
     <script>
-        const i18nData = {"fr": {"tagline": "Café & Restaurant", "slogan": "« Savourez chaque instant, du matin au soir »", "search_placeholder": "Rechercher un plat, ingrédient ou boisson...", "chap": "Chapitre", "page_info": "Page {cur} sur {total}", "prev": "Précédent", "next": "Suivant", "phone_label": "Téléphone", "address_label": "Adresse", "rights": "© 2026 House Publique. Café & Restaurant. Tous droits réservés.", "swipe_hint": "Glissez avec le doigt vers la gauche ou la droite pour tourner les pages", "cats": [{"id": "page-0", "name": "Petit Déjeuner", "sub": "Le réveil gourmand & brunch"}, {"id": "page-1", "name": "Cuisine Marocaine", "sub": "La tradition dans toute sa splendeur"}, {"id": "page-2", "name": "Plats & Grillades", "sub": "La perfection du feu et des saveurs"}, {"id": "page-3", "name": "Pâtes & Lasagnes", "sub": "Al dente, généreuses & crémeuses"}, {"id": "page-4", "name": "Burgers & Tacos", "sub": "Saveurs urbaines avec frites"}, {"id": "page-5", "name": "Pizzas Artisanales", "sub": "Pâte croustillante & mozzarella"}, {"id": "page-6", "name": "Salades Fraîches", "sub": "Légèreté, fraîcheur & vitamines"}, {"id": "page-7", "name": "Jus & Cocktails", "sub": "Fruits frais pressés minute"}, {"id": "page-8", "name": "Cafés & Thés", "sub": "Torréfaction d'exception & infusions"}, {"id": "page-9", "name": "Desserts Maison", "sub": "La note sucrée pour terminer"}]}, "es": {"tagline": "Café & Restaurante", "slogan": "« Saborea cada instante, de la mañana a la noche »", "search_placeholder": "Buscar un plato, ingrediente o bebida...", "chap": "Capítulo", "page_info": "Página {cur} de {total}", "prev": "Anterior", "next": "Siguiente", "phone_label": "Teléfono", "address_label": "Dirección", "rights": "© 2026 House Publique. Café & Restaurante. Todos los derechos reservados.", "swipe_hint": "Desliza con el dedo hacia la izquierda o derecha para pasar de página", "cats": [{"id": "page-0", "name": "Desayuno & Brunch", "sub": "El despertar gourmet y brunch"}, {"id": "page-1", "name": "Cocina Marroquí", "sub": "La tradición en todo su esplendor"}, {"id": "page-2", "name": "Platos & Parrilladas", "sub": "La perfección del fuego y los sabores"}, {"id": "page-3", "name": "Pastas & Lasañas", "sub": "Al dente, generosas y cremosas"}, {"id": "page-4", "name": "Burgers & Tacos", "sub": "Sabores urbanos con patatas"}, {"id": "page-5", "name": "Pizzas Artesanales", "sub": "Masa crujiente y mozzarella"}, {"id": "page-6", "name": "Ensaladas Frescas", "sub": "Ligereza, frescura y vitaminas"}, {"id": "page-7", "name": "Zumos & Cócteles", "sub": "Frutas frescas recién exprimidas"}, {"id": "page-8", "name": "Cafés & Tés", "sub": "Tueste de excepción e infusiones"}, {"id": "page-9", "name": "Postres Caseros", "sub": "El toque dulce para terminar"}]}, "ar": {"tagline": "مقهى ومطعم", "slogan": "« استمتع بكل لحظة من الصباح حتى المساء »", "search_placeholder": "ابحث عن طبق، مكون أو مشروب...", "chap": "الفصل", "page_info": "صفحة {cur} من {total}", "prev": "السابق", "next": "التالي", "phone_label": "الهاتف", "address_label": "العنوان", "rights": "© 2026 هاوس بيبليك. مقهى ومطعم. جميع الحقوق محفوظة.", "swipe_hint": "مرر بإصبعك يميناً أو يساراً لتقليب صفحات القائمة", "cats": [{"id": "page-0", "name": "فطور الصباح والبرانش", "sub": "بداية صباحية شهية ومميزة"}, {"id": "page-1", "name": "المطبخ المغربي", "sub": "أصالة المذاق والتقاليد المغربية"}, {"id": "page-2", "name": "أطباق الشيف والمشويات", "sub": "لحوم فاخرة وتتبيلات متميزة"}, {"id": "page-3", "name": "المعكرونة واللازانيا", "sub": "نكهات إيطالية أصيلة وغنية"}, {"id": "page-4", "name": "برجر وتاكوس", "sub": "مذاق عصري يقدم مع البطاطس"}, {"id": "page-5", "name": "البيتزا الإيطالية", "sub": "عجينة مقرمشة وجبن موزاريلا ذائب"}, {"id": "page-6", "name": "السلطات الطازجة", "sub": "خضار طازجة وصحية غنية بالفيتامينات"}, {"id": "page-7", "name": "العصائر والكوكتيل", "sub": "فواكه طبيعية 100% معصورة طازجة"}, {"id": "page-8", "name": "القهوة والشاي", "sub": "قهوة مختارة وشاي مغربي أصيل"}, {"id": "page-9", "name": "الحلويات المنزلية", "sub": "لمسة حلاوة فاخرة لختام تجربتك"}]}, "en": {"tagline": "Café & Restaurant", "slogan": "« Savor every moment, from morning till evening »", "search_placeholder": "Search dish, ingredient or drink...", "chap": "Chapter", "page_info": "Page {cur} of {total}", "prev": "Previous", "next": "Next", "phone_label": "Phone", "address_label": "Address", "rights": "© 2026 House Publique. Café & Restaurant. All rights reserved.", "swipe_hint": "Swipe left or right with your finger to flip through the book", "cats": [{"id": "page-0", "name": "Breakfast & Brunch", "sub": "The gourmet morning awakening"}, {"id": "page-1", "name": "Moroccan Cuisine", "sub": "Authentic culinary heritage"}, {"id": "page-2", "name": "Chef Plates & Grills", "sub": "Mastery of fire & noble cuts"}, {"id": "page-3", "name": "Pasta & Lasagna", "sub": "Al dente, hearty & creamy"}, {"id": "page-4", "name": "Burgers & Tacos", "sub": "Urban indulgence served with fries"}, {"id": "page-5", "name": "Artisan Pizzas", "sub": "Crispy crust & melted mozzarella"}, {"id": "page-6", "name": "Fresh Salads", "sub": "Seasonal vitality & freshness"}, {"id": "page-7", "name": "Juices & Cocktails", "sub": "100% fresh fruits pressed minute"}, {"id": "page-8", "name": "Coffee & Teas", "sub": "Artisan roasts & herbal teas"}, {"id": "page-9", "name": "Homemade Desserts", "sub": "The sweet delicate finale"}]}};
+        // ═══ LIMPIEZA FORZADA DE COOKIES Y CACHÉ AL ACCEDER A LA PÁGINA ═══
+        (function() {
+            try {
+                // Borrar todas las cookies
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i];
+                    const eqPos = cookie.indexOf("=");
+                    const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+                    if (name) {
+                        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
+                        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=" + window.location.hostname + ";";
+                        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=." + window.location.hostname + ";";
+                    }
+                }
+                sessionStorage.clear();
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(registrations => {
+                        for (let reg of registrations) reg.unregister();
+                    });
+                }
+                if ('caches' in window) {
+                    caches.keys().then(names => {
+                        for (let name of names) caches.delete(name);
+                    });
+                }
+            } catch(e) {}
+        })();
+
+        const i18nData = {"fr": {"tagline": "Café & Restaurant", "slogan": "« Savourez chaque instant, du matin au soir »", "chap": "Chapitre", "page_info": "Page {cur} sur {total}", "prev": "Précédent", "next": "Suivant", "phone_label": "Téléphone", "address_label": "Adresse", "rights": "© 2026 House Publique. Café & Restaurant. Tous droits réservés.", "discover": "Découvrir la carte", "swipe_hint": "Glissez avec le doigt vers la gauche ou la droite pour tourner les pages", "barista_title": "Passion Barista", "barista_sub": "Café de spécialité fraîchement torréfié", "toast_caption": "L'art du petit déjeuner gourmand", "omelette_caption": "Omelettes dorées au beurre frais", "friends_caption": "Moments chaleureux en famille ou entre amis", "reader_caption": "L'instant café & détente", "cats": [{"id": "page-0", "name": "Petit Déjeuner", "sub": "Le réveil gourmand & brunch"}, {"id": "page-1", "name": "Cuisine Marocaine", "sub": "La tradition dans toute sa splendeur"}, {"id": "page-2", "name": "Plats & Grillades", "sub": "La perfection du feu et des saveurs"}, {"id": "page-3", "name": "Pâtes & Lasagnes", "sub": "Al dente, généreuses & crémeuses"}, {"id": "page-4", "name": "Burgers & Tacos", "sub": "Saveurs urbaines avec frites"}, {"id": "page-5", "name": "Pizzas Artisanales", "sub": "Pâte croustillante & mozzarella"}, {"id": "page-6", "name": "Salades Fraîches", "sub": "Légèreté, fraîcheur & vitamines"}, {"id": "page-7", "name": "Jus & Cocktails", "sub": "Fruits frais pressés minute"}, {"id": "page-8", "name": "Cafés & Thés", "sub": "Torréfaction d'exception & infusions"}, {"id": "page-9", "name": "Desserts Maison", "sub": "La note sucrée pour terminer"}]}, "es": {"tagline": "Café & Restaurante", "slogan": "« Saborea cada instante, de la mañana a la noche »", "chap": "Capítulo", "page_info": "Página {cur} de {total}", "prev": "Anterior", "next": "Siguiente", "phone_label": "Teléfono", "address_label": "Dirección", "rights": "© 2026 House Publique. Café & Restaurante. Todos los derechos reservados.", "discover": "Descubrir la carta", "swipe_hint": "Desliza con el dedo hacia la izquierda o derecha para pasar de página", "barista_title": "Pasión Barista", "barista_sub": "Café de especialidad recién tostado", "toast_caption": "El arte del desayuno gourmet", "omelette_caption": "Tortillas doradas a la francesa", "friends_caption": "Momentos entrañables en familia o con amigos", "reader_caption": "El rincón del café y la lectura", "cats": [{"id": "page-0", "name": "Desayuno & Brunch", "sub": "El despertar gourmet y brunch"}, {"id": "page-1", "name": "Cocina Marroquí", "sub": "La tradición en todo su esplendor"}, {"id": "page-2", "name": "Platos & Parrilladas", "sub": "La perfección del fuego y los sabores"}, {"id": "page-3", "name": "Pastas & Lasañas", "sub": "Al dente, generosas y cremosas"}, {"id": "page-4", "name": "Burgers & Tacos", "sub": "Sabores urbanos con patatas"}, {"id": "page-5", "name": "Pizzas Artesanales", "sub": "Masa crujiente y mozzarella"}, {"id": "page-6", "name": "Ensaladas Frescas", "sub": "Ligereza, frescura y vitaminas"}, {"id": "page-7", "name": "Zumos & Cócteles", "sub": "Frutas frescas recién exprimidas"}, {"id": "page-8", "name": "Cafés & Tés", "sub": "Tueste de excepción e infusiones"}, {"id": "page-9", "name": "Postres Caseros", "sub": "El toque dulce para terminar"}]}, "ar": {"tagline": "مقهى ومطعم", "slogan": "« استمتع بكل لحظة من الصباح حتى المساء »", "chap": "الفصل", "page_info": "صفحة {cur} من {total}", "prev": "السابق", "next": "التالي", "phone_label": "الهاتف", "address_label": "العنوان", "rights": "© 2026 هاوس بيبليك. مقهى ومطعم. جميع الحقوق محفوظة.", "discover": "اكتشف القائمة", "swipe_hint": "مرر بإصبعك يميناً أو يساراً لتقليب صفحات القائمة", "barista_title": "شغف الباريستا", "barista_sub": "قهوة مختصة محمصة بعناية فائقة", "toast_caption": "فن الفطور الصباحي الراقي", "omelette_caption": "أومليت شهية محضرة بالزبدة الطازجة", "friends_caption": "لحظات دافئة تجمع العائلة والأصدقاء", "reader_caption": "لحظات استرخاء مع فنجان قهوة", "cats": [{"id": "page-0", "name": "فطور الصباح والبرانش", "sub": "بداية صباحية شهية ومميزة"}, {"id": "page-1", "name": "المطبخ المغربي", "sub": "أصالة المذاق والتقاليد المغربية"}, {"id": "page-2", "name": "أطباق الشيف والمشويات", "sub": "لحوم فاخرة وتتبيلات متميزة"}, {"id": "page-3", "name": "المعكرونة واللازانيا", "sub": "نكهات إيطالية أصيلة وغنية"}, {"id": "page-4", "name": "برجر وتاكوس", "sub": "مذاق عصري يقدم مع البطاطس"}, {"id": "page-5", "name": "البيتزا الإيطالية", "sub": "عجينة مقرمشة وجبن موزاريلا ذائب"}, {"id": "page-6", "name": "السلطات الطازجة", "sub": "خضار طازجة وصحية غنية بالفيتامينات"}, {"id": "page-7", "name": "العصائر والكوكتيل", "sub": "فواكه طبيعية 100% معصورة طازجة"}, {"id": "page-8", "name": "القهوة والشاي", "sub": "قهوة مختارة وشاي مغربي أصيل"}, {"id": "page-9", "name": "الحلويات المنزلية", "sub": "لمسة حلاوة فاخرة لختام تجربتك"}]}, "en": {"tagline": "Café & Restaurant", "slogan": "« Savor every moment, from morning till evening »", "chap": "Chapter", "page_info": "Page {cur} of {total}", "prev": "Previous", "next": "Next", "phone_label": "Phone", "address_label": "Address", "rights": "© 2026 House Publique. Café & Restaurant. All rights reserved.", "discover": "Discover the menu", "swipe_hint": "Swipe left or right with your finger to flip through the book", "barista_title": "Barista Passion", "barista_sub": "Freshly roasted specialty coffee", "toast_caption": "The art of gourmet breakfast", "omelette_caption": "Golden french-style omelets", "friends_caption": "Precious moments shared with loved ones", "reader_caption": "A relaxing coffee reading moment", "cats": [{"id": "page-0", "name": "Breakfast & Brunch", "sub": "The gourmet morning awakening"}, {"id": "page-1", "name": "Moroccan Cuisine", "sub": "Authentic culinary heritage"}, {"id": "page-2", "name": "Chef Plates & Grills", "sub": "Mastery of fire & noble cuts"}, {"id": "page-3", "name": "Pasta & Lasagna", "sub": "Al dente, hearty & creamy"}, {"id": "page-4", "name": "Burgers & Tacos", "sub": "Urban indulgence served with fries"}, {"id": "page-5", "name": "Artisan Pizzas", "sub": "Crispy crust & melted mozzarella"}, {"id": "page-6", "name": "Fresh Salads", "sub": "Seasonal vitality & freshness"}, {"id": "page-7", "name": "Juices & Cocktails", "sub": "100% fresh fruits pressed minute"}, {"id": "page-8", "name": "Coffee & Teas", "sub": "Artisan roasts & herbal teas"}, {"id": "page-9", "name": "Homemade Desserts", "sub": "The sweet delicate finale"}]}};
         let currentLang = 'fr';
         let currentPage = 0;
         const totalPages = 10;
@@ -2662,7 +2921,6 @@
             currentPage = pageIdx;
             updateActivePageUI(pageIdx);
 
-            // Desplazar hacia el inicio de la carta si el usuario estaba abajo
             if (scrollUp) {
                 const anchor = document.getElementById('book-top-anchor');
                 if (anchor) {
@@ -2719,7 +2977,7 @@
                 const diffX = touchEndX - touchStartX;
                 const diffY = touchEndY - touchStartY;
 
-                // Solo si el deslizamiento es más horizontal que vertical y tiene al menos 40px
+                // Solo si el deslizamiento es horizontal y tiene al menos 40px
                 if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
                     if (currentLang === 'ar') {
                         if (diffX < 0) prevPage();
@@ -2732,7 +2990,52 @@
             }, { passive: true });
         }
 
-        // Cambio de Idioma desde el desplegable único (FR / ES / AR / EN)
+        // ═══ DESPLEGABLE PERSONALIZADO DE IDIOMAS ═══
+        function toggleLangMenu(e) {
+            if (e) e.stopPropagation();
+            const panel = document.getElementById('lang-menu-panel');
+            const chevron = document.getElementById('lang-chevron');
+            if (!panel) return;
+            const isHidden = panel.classList.contains('hidden');
+            if (isHidden) {
+                panel.classList.remove('hidden');
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
+            } else {
+                panel.classList.add('hidden');
+                if (chevron) chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function selectLang(lang) {
+            setLang(lang);
+            const panel = document.getElementById('lang-menu-panel');
+            const chevron = document.getElementById('lang-chevron');
+            if (panel) panel.classList.add('hidden');
+            if (chevron) chevron.style.transform = 'rotate(0deg)';
+        }
+
+        // Cerrar menú de idiomas al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('custom-lang-dropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                const panel = document.getElementById('lang-menu-panel');
+                const chevron = document.getElementById('lang-chevron');
+                if (panel) panel.classList.add('hidden');
+                if (chevron) chevron.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Desplazamiento suave hacia la barra de categorías
+        function scrollToMenu(e) {
+            if (e) e.preventDefault();
+            const target = document.getElementById('category-bar-wrapper');
+            if (target) {
+                const top = target.getBoundingClientRect().top + window.pageYOffset - 58;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        }
+
+        // Cambio de Idioma (FR / ES / AR / EN)
         function setLang(lang) {
             if (!i18nData[lang]) return;
             currentLang = lang;
@@ -2741,20 +3044,45 @@
             document.documentElement.lang = lang;
             document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
 
-            // Sincronizar select
-            const selectEl = document.getElementById('lang-select');
-            if (selectEl) selectEl.value = lang;
+            // Sincronizar desplegable personalizado de idiomas
+            const currentCode = document.getElementById('current-lang-code');
+            if (currentCode) {
+                currentCode.textContent = (lang === 'ar') ? 'عربي' : lang.toUpperCase();
+            }
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                const isSelected = (btn.getAttribute('data-lang') === lang);
+                const check = btn.querySelector('.lang-check');
+                if (check) {
+                    if (isSelected) check.classList.remove('hidden');
+                    else check.classList.add('hidden');
+                }
+            });
+
+            // Botón de descubrir menú y tagline hero
+            const discBtn = document.getElementById('ui-discover-btn');
+            if (discBtn && data.discover) discBtn.textContent = data.discover;
+            const heroTagline = document.getElementById('ui-tagline-hero');
+            if (heroTagline) heroTagline.textContent = data.tagline;
 
             // Textos generales
             document.getElementById('ui-tagline').textContent = data.tagline;
             document.getElementById('ui-slogan').textContent = data.slogan;
-            document.getElementById('menu-search').placeholder = data.search_placeholder;
-            document.getElementById('btn-prev-text').textContent = data.prev;
-            document.getElementById('btn-next-text').textContent = data.next;
+            document.querySelectorAll('.ui-btn-prev-text').forEach(el => el.textContent = data.prev);
+            document.querySelectorAll('.ui-btn-next-text').forEach(el => el.textContent = data.next);
             document.getElementById('ui-swipe-hint').textContent = data.swipe_hint;
             document.getElementById('ui-phone-label').textContent = data.phone_label;
             document.getElementById('ui-address-label').textContent = data.address_label;
             document.getElementById('ui-rights').textContent = data.rights;
+
+            // Textos de subtítulos de imágenes
+            const tCap = document.getElementById('ui-toast-caption');
+            if (tCap) tCap.textContent = data.toast_caption;
+            const oCap = document.getElementById('ui-omelette-caption');
+            if (oCap) oCap.textContent = data.omelette_caption;
+            const fCap = document.getElementById('ui-friends-caption');
+            if (fCap) fCap.textContent = data.friends_caption;
+            const rCap = document.getElementById('ui-reader-caption');
+            if (rCap) rCap.textContent = data.reader_caption;
 
             // Etiquetas de Capítulo
             document.querySelectorAll('.ui-chap-label').forEach(el => {
@@ -2774,46 +3102,6 @@
             });
 
             updateActivePageUI(currentPage);
-        }
-
-        // Buscador interactivo
-        function handleSearch(val) {
-            const q = val.trim().toLowerCase();
-            const clearBtn = document.getElementById('clear-search');
-            if (q.length > 0) {
-                clearBtn.classList.remove('hidden');
-            } else {
-                clearBtn.classList.add('hidden');
-            }
-
-            const items = document.querySelectorAll('.menu-item');
-            items.forEach(itm => {
-                const text = itm.textContent.toLowerCase();
-                if (text.includes(q)) {
-                    itm.classList.remove('hidden');
-                } else {
-                    itm.classList.add('hidden');
-                }
-            });
-
-            // Si hay búsqueda, ir a la primera página que tenga resultados
-            if (q.length > 0) {
-                for (let i = 0; i < totalPages; i++) {
-                    const page = document.getElementById('page-' + i);
-                    const match = page.querySelector('.menu-item:not(.hidden)');
-                    if (match) {
-                        goToPage(i, false);
-                        break;
-                    }
-                }
-            }
-        }
-
-        function clearSearch() {
-            const searchInput = document.getElementById('menu-search');
-            searchInput.value = '';
-            handleSearch('');
-            searchInput.focus();
         }
 
         // PRELOADER
