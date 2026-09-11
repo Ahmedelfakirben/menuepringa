@@ -15,6 +15,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copiar el HTML principal como index (renombrar al copiar)
 COPY men_digital_house_publique.html /usr/share/nginx/html/index.html
 
+# Copiar la página del menú QR imprimible
+COPY qr-menu.html /usr/share/nginx/html/qr-menu.html
+
 # Copiar carpeta de assets (imágenes)
 COPY assets/ /usr/share/nginx/html/assets/
 
