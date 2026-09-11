@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Publique — Menu Petit Déjeuner Artistique</title>
+    
+    <!-- Fuentes Google de alta gama: Alex Brush (caligrafía del menú), Cormorant Garamond, Cinzel, Outfit, Amiri, Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hp-cream': '#F8F4EB',
+                        'hp-parchment': '#EFE7D5',
+                        'hp-kraft': '#B28A43',
+                        'hp-kraft-dark': '#8F6A2A',
+                        'hp-gold': '#C29B4F',
+                        'hp-gold-bright': '#DFC076',
+                        'hp-ink': '#201C18',
+                        'hp-ink-soft': '#3A342E',
+                        'hp-stone': '#746B61',
+                    },
+                    fontFamily: {
+                        'script': ['"Alex Brush"', 'cursive'],
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                        'cinzel': ['"Cinzel"', 'serif'],
+                        'sans': ['"Outfit"', 'sans-serif'],
+                        'arabic': ['"Tajawal"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fondo con textura artística de papel artesanal */
+        body {
+            background-color: #F8F4EB;
+            color: #201C18;
+            font-family: 'Outfit', sans-serif;
+            background-image: 
+                radial-gradient(rgba(178, 138, 67, 0.09) 1px, transparent 0),
+                linear-gradient(180deg, rgba(248, 244, 235, 0.95) 0%, rgba(243, 236, 222, 0.98) 100%);
+            background-size: 28px 28px, 100% 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ajuste árabe */
+        html[dir="rtl"] body {
+            font-family: 'Tajawal', sans-serif !important;
+        }
+        html[dir="rtl"] .font-script {
+            font-family: 'Amiri', serif !important;
+            font-style: italic;
+        }
+
+        /* Tarjeta Artística con relieve y borde dorado suave */
+        .art-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(178, 138, 67, 0.22);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px -4px rgba(45, 35, 20, 0.05), 0 2px 6px rgba(0,0,0,0.02);
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .art-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transform: skewX(-25deg);
+            transition: 0.75s ease;
+            pointer-events: none;
+        }
+
+        .art-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: rgba(194, 155, 79, 0.55);
+            box-shadow: 0 16px 36px -6px rgba(178, 138, 67, 0.16), 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .art-card:hover::before {
+            left: 150%;
+        }
+
+        /* Polaroid Artístico con Chincheta/Sombra realista */
+        .polaroid-art {
+            background: #FFFFFF;
+            padding: 12px 12px 28px 12px;
+            border-radius: 6px;
+            box-shadow: 0 14px 32px -6px rgba(35, 25, 15, 0.18), 0 3px 10px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .polaroid-art:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            box-shadow: 0 22px 42px -6px rgba(35, 25, 15, 0.24);
+        }
+
+        /* Cinta adhesiva vintage (Washi Tape effect) */
+        .tape-effect {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 24px;
+            background: rgba(225, 215, 195, 0.65);
+            border: 1px dashed rgba(160, 140, 110, 0.4);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        /* Caja Ocre Kraft Artesanal fiel a la página real */
+        .kraft-badge {
+            background: linear-gradient(135deg, #B28A43 0%, #98722E 100%);
+            color: #FAF5EB;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -4px rgba(152, 114, 46, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Línea de puntos de carta clásica */
+        .fine-dots {
+            border-bottom: 2px dotted rgba(178, 138, 67, 0.35);
+            flex-grow: 1;
+            margin: 0 12px;
+            position: relative;
+            top: -5px;
+        }
+
+        /* Animaciones suaves */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeInScale 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* Pestañas artísticas */
+        .tab-art.active {
+            background: linear-gradient(135deg, #B28A43 0%, #916B27 100%);
+            color: #FFFFFF;
+            font-weight: 600;
+            box-shadow: 0 6px 16px rgba(145, 107, 39, 0.28);
+        }
+
+        .lang-link.active {
+            color: #B28A43;
+            font-weight: 700;
+            background: rgba(178, 138, 67, 0.12);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+
+    <!-- Barra Superior Flotante: Marca e Idiomas -->
+    <header class="sticky top-0 z-50 bg-[#F8F4EB]/90 backdrop-blur-md border-b border-hp-kraft/20 py-2.5 px-4 transition-all">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <img src="assets/logo.jpg" alt="Logo" class="w-9 h-9 rounded-full object-cover border border-hp-gold/50 shadow-xs">
+                <div>
+                    <h2 class="font-cinzel text-xs sm:text-sm font-bold tracking-wider text-hp-ink">HOUSE PUBLIQUE</h2>
+                    <p class="text-[9px] uppercase tracking-[0.2em] text-hp-kraft font-semibold">Café & Restaurant</p>
+                </div>
+            </div>
+
+            <!-- Selector de Idiomas Elegante -->
+            <nav aria-label="Idiomas" class="flex items-center bg-white/80 border border-hp-gold/30 rounded-full px-2 py-1 shadow-xs text-xs font-semibold text-hp-stone">
+                <button onclick="setLang('fr')" id="lang-fr" class="lang-link active px-2.5 py-0.5 rounded-full transition-all">FR</button>
+                <span class="text-hp-stone/20">|</span>
+                <button onclick="setLang('es')" id="lang-es" class="lang-link px-2.5 py-0.5 rounded-full transition-all">ES</button>
+                <span class="text-hp-stone/20">|</span>
+                <button onclick="setLang('ar')" id="lang-ar" class="lang-link px-2.5 py-0.5 rounded-full transition-all">عربي</button>
+                <span class="text-hp-stone/20">|</span>
+                <button onclick="setLang('en')" id="lang-en" class="lang-link px-2.5 py-0.5 rounded-full transition-all">EN</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Héroe Principal: Escudo Dorado, Título Caligráfico y Ambiente Artístico -->
+    <section class="relative pt-8 pb-10 px-4 text-center overflow-hidden">
+        <div class="max-w-3xl mx-auto flex flex-col items-center">
+            
+            <!-- Logo con halo dorado suave -->
+            <div class="relative mb-4">
+                <div class="absolute -inset-2 bg-gradient-to-r from-hp-gold via-hp-kraft to-hp-gold rounded-full blur-md opacity-30 animate-pulse"></div>
+                <img src="assets/logo.jpg" alt="House Publique Crest" class="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-4 border-white shadow-xl">
+            </div>
+
+            <!-- Título Principal con Tipografía de Corona -->
+            <h1 class="font-cinzel text-3xl sm:text-4xl md:text-5xl font-bold tracking-wider text-hp-ink mb-1">
+                HOUSE PUBLIQUE
+            </h1>
+            <p class="font-sans text-xs uppercase tracking-[0.35em] text-hp-kraft font-bold mb-3" data-i18n="tagline">
+                Café — Restaurant
+            </p>
+
+            <div class="flex items-center justify-center gap-3 w-40 mb-3">
+                <div class="h-[1px] bg-gradient-to-r from-transparent to-hp-kraft flex-1"></div>
+                <i class="fas fa-crown text-hp-kraft text-xs"></i>
+                <div class="h-[1px] bg-gradient-to-l from-transparent to-hp-kraft flex-1"></div>
+            </div>
+
+            <!-- Gran Título Caligráfico con Fuente Alex Brush -->
+            <h2 class="font-script text-5xl sm:text-6xl md:text-7xl text-hp-kraft-dark mt-1 mb-3" data-i18n="menu_title">
+                Menu Petit Dej
+            </h2>
+
+            <!-- Nota Manuscrita con Polaroid de Café (Extraída de tu foto real) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full mt-4 items-center bg-white/60 p-4 rounded-2xl border border-hp-gold/25 shadow-xs">
+                <div class="flex items-center gap-3">
+                    <img src="assets/cafe_polaroid.jpg" alt="Café Espresso Barista" class="w-16 h-16 rounded-xl object-cover border border-hp-gold/30 shadow-xs">
+                    <div class="text-left rtl:text-right">
+                        <span class="text-[10px] uppercase tracking-widest text-hp-kraft font-bold" data-i18n="fresh_coffee">Barista Passion</span>
+                        <p class="font-serif italic text-xs text-hp-stone" data-i18n="coffee_sub">Espresso & cafés de terroir</p>
+                    </div>
+                </div>
+                <p class="font-serif italic text-xs sm:text-sm text-hp-ink text-center sm:text-right rtl:sm:text-left leading-relaxed" data-i18n="slogan">
+                    « Un bon matin commence par une touche gourmande. Savourez chaque instant ! »
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Selector de Pestañas Artístico -->
+    <nav class="max-w-md mx-auto px-4 mb-10">
+        <div class="bg-white/90 p-1.5 rounded-full border border-hp-gold/30 shadow-sm flex justify-center gap-2">
+            <button onclick="switchTab('tab-formules')" id="btn-tab-formules" class="tab-art active flex-1 py-2.5 px-5 rounded-full text-xs font-semibold transition-all text-center tracking-wide" data-i18n="tab_formules">
+                Formules Petit Déj
+            </button>
+            <button onclick="switchTab('tab-alacarte')" id="btn-tab-alacarte" class="tab-art flex-1 py-2.5 px-5 rounded-full text-xs font-semibold text-hp-stone hover:text-hp-ink transition-all text-center tracking-wide" data-i18n="tab_alacarte">
+                À la Carte
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal del Menú -->
+    <main class="max-w-5xl mx-auto px-4 space-y-14">
+
+        <!-- ==============================================
+             PESTAÑA 1: FORMULES PETIT DÉJEUNER
+             ============================================== -->
+        <div id="tab-formules" class="tab-content animate-fade-in space-y-8">
+
+            <!-- Vitrina Especial: Tostada con Huevo Poché y Aguacate (Foto Real) -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center art-card p-6 md:p-8 bg-gradient-to-r from-white via-white to-amber-50/30">
+                <!-- Polaroid con Cinta Adhesiva Vintage -->
+                <div class="md:col-span-4 flex justify-center">
+                    <div class="polaroid-art -rotate-2 max-w-[260px]">
+                        <div class="tape-effect"></div>
+                        <img src="assets/dish_avocado_toast.jpg" alt="Tostada de aguacate y huevo poché real" class="w-full h-56 object-cover rounded">
+                        <p class="font-script text-2xl text-center text-hp-kraft-dark mt-3" data-i18n="caption_toast">L'art du petit déjeuner</p>
+                    </div>
+                </div>
+
+                <!-- Resumen Editorial -->
+                <div class="md:col-span-8 flex flex-col justify-center text-center md:text-left rtl:md:text-right">
+                    <div class="flex items-center justify-center md:justify-start rtl:md:justify-end gap-2 text-hp-kraft font-bold text-xs uppercase tracking-widest mb-1">
+                        <i class="fas fa-sparkles"></i>
+                        <span data-i18n="formulas_badge">Formules Matinales Complètes</span>
+                    </div>
+                    <h3 class="font-script text-4xl sm:text-5xl text-hp-ink mb-2" data-i18n="formulas_heading">
+                        Douceurs & Traditions du Matin
+                    </h3>
+                    <p class="text-xs sm:text-sm text-hp-stone leading-relaxed mb-4" data-i18n="formulas_desc">
+                        Chaque formule est généreusement servie avec une boisson chaude au choix, un jus frais maison et de l'eau minérale pour bien commencer la journée.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start rtl:md:justify-end gap-3 text-xs font-medium text-hp-kraft-dark">
+                        <span class="bg-hp-kraft/10 px-3 py-1 rounded-full"><i class="fas fa-mug-saucer mr-1"></i> Boisson chaude</span>
+                        <span class="bg-hp-kraft/10 px-3 py-1 rounded-full"><i class="fas fa-blender mr-1"></i> Jus maison</span>
+                        <span class="bg-hp-kraft/10 px-3 py-1 rounded-full"><i class="fas fa-bottle-water mr-1"></i> Eau minérale</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parrilla de las 9 Fórmulas con Títulos Caligráficos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- 1. Française (35 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_francaise">Française</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">35 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_douceur">Douceur Parisienne</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_francaise">
+                            Assortiment de 3 mini viennoiseries, Nutella, confiture, boisson chaude au choix, jus maison, eau minérale.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 2. Traditionnel (40 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_traditionnel">Traditionnel</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">40 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-orange-700 bg-orange-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_beldi">Saveurs Beldi</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_traditionnel">
+                            Harcha, baghrir, rghayef, miel, amlou, beurre, fromage traditionnel, huile d'olive, olive, boisson chaude, eau minérale, jus de maison.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 3. Tétouani (42 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_tetouani">Tétouani</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">42 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_nord">Tradition du Nord</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_tetouani">
+                            Deux oeufs au choix, assortiment de charcuterie, mortadelle, la vache qui rit, fromage traditionnel, huile d'olive, olive, boisson chaude, eau minérale, jus de maison.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 4. Fassi (45 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_fassi">Fassi</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">45 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-amber-800 bg-amber-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_khlie">Au Khlie Artisanal</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_fassi">
+                            Deux oeufs au choix, khlie, olive, huile d'olive, boisson chaude, eau minérale, jus de maison.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 5. Espagnol (45 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_espagnol">Espagnol</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">45 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_ibere">Méditerranéen</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_espagnol">
+                            Pain céréales grillé, tomate, épices, fromage manchego, tapenade, thon, avocat, huile d'olive, olive, jus maison, eau minérale.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 6. Fitness (50 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_fitness">Fitness</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">50 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-teal-700 bg-teal-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_healthy">Vitalité & Équilibre</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_fitness">
+                            Bol de yaourt fait maison, fruits de saison, fruits, pain grillé, tapenade, fromage traditionnel, mini detox.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 7. British (55 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_british">British</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">55 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_copieux">Anglais Gourmand</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_british">
+                            Deux oeufs au choix, saucisse grillée, haricots rouges, tomate, champignons, dinde fumée, fromage edam, eau minérale, jus maison, huile d'olive, olive.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 8. La Casa (50 DH) -->
+                <article class="art-card p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-4xl text-hp-ink" data-i18n="f_lacasa">La Casa</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">50 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-hp-kraft bg-hp-kraft/15 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_signature">Signature Maison</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_lacasa">
+                            Pain céréales grillé, assortiment de charcuterie, oeufs à la coque, fromage traditionnel, Kiri, beurre, confiture, bol de yaourt, fruits de saison, huile d'olive, olive, eau minérale, jus de maison.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- 9. Le Brunch (60 DH) - Pieza Maestra -->
+                <article class="art-card p-6 md:col-span-2 lg:col-span-1 border-2 border-hp-kraft/40 bg-gradient-to-b from-white to-amber-50/50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-baseline justify-between mb-1">
+                            <div class="flex items-center gap-1.5">
+                                <i class="fas fa-crown text-hp-kraft text-xs"></i>
+                                <h4 class="font-script text-4xl text-hp-kraft-dark" data-i18n="f_brunch">Le Brunch</h4>
+                            </div>
+                            <span class="font-serif text-3xl font-bold text-hp-kraft">60 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <span class="inline-block text-[10px] uppercase font-bold text-amber-800 bg-amber-200/60 px-2 py-0.5 rounded-full mb-3" data-i18n="tag_fete">Le Grand Festin</span>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_brunch">
+                            Toast céréales au fromage, pancakes, 2 assortiments de viennoiseries, assortiment de pain, omelette nature, pain perdu nature, bol de yaourt, fruits de saison, fruits, huile d'olive, olive, eau minérale, jus de maison ou mini detox.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Ilustración Artística de Amigos (Foto Real) -->
+            <div class="pt-6 text-center opacity-85">
+                <img src="assets/sketch_friends.jpg" alt="Convivialité House Publique" class="w-72 md:w-80 mx-auto mix-blend-multiply rounded-lg">
+                <p class="font-script text-2xl text-hp-kraft mt-2" data-i18n="caption_friends">Moments partagés en famille ou entre amis</p>
+            </div>
+
+        </div>
+
+        <!-- ==============================================
+             PESTAÑA 2: À LA CARTE
+             ============================================== -->
+        <div id="tab-alacarte" class="tab-content hidden animate-fade-in space-y-12">
+
+            <!-- Sección 1: Pains & Compositions con ilustración del lector de carta -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                
+                <!-- Opciones de Pan (10 tipos del menú físico) -->
+                <div class="md:col-span-5 art-card p-6">
+                    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-hp-gold/20">
+                        <img src="assets/sketch_reader.jpg" alt="Lecteur" class="w-12 h-12 object-contain mix-blend-multiply">
+                        <div>
+                            <h3 class="font-script text-3xl text-hp-ink" data-i18n="cat_pains">Options de Pain</h3>
+                            <p class="text-[10px] uppercase tracking-widest text-hp-kraft font-semibold" data-i18n="sub_pains">Chauds & croustillants</p>
+                        </div>
+                    </div>
+                    <ul class="grid grid-cols-2 gap-2.5 text-xs text-hp-ink font-medium">
+                        <li class="flex items-center gap-1.5"><i class="fas fa-bread-slice text-hp-kraft text-[10px]"></i> <span data-i18n="p_1">Pain Complet</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-bread-slice text-hp-kraft text-[10px]"></i> <span data-i18n="p_2">Pain d'Orge</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-bread-slice text-hp-kraft text-[10px]"></i> <span data-i18n="p_3">Pain Maqla</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-bread-slice text-hp-kraft text-[10px]"></i> <span data-i18n="p_4">Pain Maqla Complet</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-cookie text-hp-kraft text-[10px]"></i> <span data-i18n="p_5">Rghayef</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-cookie text-hp-kraft text-[10px]"></i> <span data-i18n="p_6">Harcha</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-cookie text-hp-kraft text-[10px]"></i> <span data-i18n="p_7">Harcha d'Orge</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-cookie text-hp-kraft text-[10px]"></i> <span data-i18n="p_8">Baghrir</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-bread-slice text-hp-kraft text-[10px]"></i> <span data-i18n="p_9">Mlaoui</span></li>
+                        <li class="flex items-center gap-1.5"><i class="fas fa-bread-slice text-hp-kraft text-[10px]"></i> <span data-i18n="p_10">Baguette</span></li>
+                    </ul>
+                </div>
+
+                <!-- Compositions 1 & 2 -->
+                <div class="md:col-span-7 space-y-4">
+                    <!-- Composition 1 -->
+                    <div class="art-card p-6">
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-3xl text-hp-ink" data-i18n="comp_1">Composition 1</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">14 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <p class="text-[11px] uppercase tracking-wider text-hp-kraft font-bold mb-2" data-i18n="d_comp_sub">Servi avec deux accompagnements au choix :</p>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_comp_1">
+                            Huile d'olive, oeuf, miel, beurre, fromage traditionnel, confiture, Kiri, vache qui rit.
+                        </p>
+                    </div>
+
+                    <!-- Composition 2 -->
+                    <div class="art-card p-6">
+                        <div class="flex items-baseline justify-between mb-1">
+                            <h4 class="font-script text-3xl text-hp-ink" data-i18n="comp_2">Composition 2</h4>
+                            <span class="font-serif text-2xl font-bold text-hp-kraft">18 <span class="text-xs font-sans text-hp-stone">DH</span></span>
+                        </div>
+                        <p class="text-[11px] uppercase tracking-wider text-hp-kraft font-bold mb-2" data-i18n="d_comp_sub">Servi avec deux accompagnements au choix :</p>
+                        <p class="text-xs text-hp-stone leading-relaxed font-light" data-i18n="d_comp_2">
+                            Nutella, amlou, dinde fumée, fromage edam, suprême de dinde, salami de dinde, fromage manchego, avocat, thon.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sección 2: Options Chamali (Caja Ocre Kraft auténtica) -->
+            <div class="kraft-badge p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-white/25 pb-3 mb-5">
+                    <div>
+                        <h3 class="font-script text-4xl sm:text-5xl text-white" data-i18n="cat_chamali">Options Chamali</h3>
+                        <p class="text-xs uppercase tracking-[0.2em] text-white/80" data-i18n="chamali_sub">Saveurs Authentiques du Nord</p>
+                    </div>
+                    <span class="text-xs italic text-white/90 mt-1 sm:mt-0 font-serif">Au goût du terroir</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-black/15 p-4 rounded-xl border border-white/20">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h4 class="font-serif font-bold text-sm" data-i18n="ch_1">Petit Déjeuner Chamali 1</h4>
+                            <span class="font-serif font-bold text-lg">14 DH</span>
+                        </div>
+                        <p class="text-xs text-white/80 font-light" data-i18n="d_ch_1">Pain complet, oeufs, fromage traditionnel, huile d'olive.</p>
+                    </div>
+                    <div class="bg-black/15 p-4 rounded-xl border border-white/20">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h4 class="font-serif font-bold text-sm" data-i18n="ch_2">Petit Déjeuner Chamali 2</h4>
+                            <span class="font-serif font-bold text-lg">16 DH</span>
+                        </div>
+                        <p class="text-xs text-white/80 font-light" data-i18n="d_ch_2">Pain complet, oeufs, fromage traditionnel, fromage edam, huile d'olive.</p>
+                    </div>
+                    <div class="bg-black/15 p-4 rounded-xl border border-white/20">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h4 class="font-serif font-bold text-sm" data-i18n="ch_3">Petit Déjeuner Chamali 3</h4>
+                            <span class="font-serif font-bold text-lg">18 DH</span>
+                        </div>
+                        <p class="text-xs text-white/80 font-light" data-i18n="d_ch_3">Pain complet, oeufs, fromage traditionnel, fromage edam, dinde fumée, huile d'olive.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3: Oeufs au Plat & Mgilats -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Oeufs au Plat -->
+                <div class="art-card p-6">
+                    <h3 class="font-script text-3xl text-hp-ink mb-4 pb-2 border-b border-hp-gold/20 flex items-center justify-between">
+                        <span data-i18n="cat_oeufs">Les Oeufs</span>
+                        <i class="fas fa-egg text-hp-kraft text-base"></i>
+                    </h3>
+                    <ul class="space-y-4 text-xs">
+                        <li>
+                            <div class="flex justify-between items-baseline">
+                                <span class="font-medium text-hp-ink" data-i18n="oeuf_1">Oeuf au plat</span>
+                                <span class="fine-dots"></span>
+                                <span class="font-serif font-bold text-hp-kraft text-base">16 DH</span>
+                            </div>
+                            <p class="text-[11px] text-hp-stone mt-0.5 font-light" data-i18n="acc_fromage">Accompagnements : fromage traditionnel, la vache qui rit</p>
+                        </li>
+                        <li>
+                            <div class="flex justify-between items-baseline">
+                                <span class="font-medium text-hp-ink" data-i18n="oeuf_2">Deux oeufs au plat</span>
+                                <span class="fine-dots"></span>
+                                <span class="font-serif font-bold text-hp-kraft text-base">20 DH</span>
+                            </div>
+                            <p class="text-[11px] text-hp-stone mt-0.5 font-light" data-i18n="acc_fromage">Accompagnements : fromage traditionnel, la vache qui rit</p>
+                        </li>
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="oeuf_3">Oeuf au plat spécial</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">20 DH</span>
+                        </li>
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="oeuf_4">Deux oeufs au plat spécial</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">25 DH</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Mgilats (Poêlons Chauds) -->
+                <div class="art-card p-6">
+                    <h3 class="font-script text-3xl text-hp-ink mb-4 pb-2 border-b border-hp-gold/20 flex items-center justify-between">
+                        <span data-i18n="cat_mgilats">Mgilats</span>
+                        <i class="fas fa-fire-burner text-hp-kraft text-base"></i>
+                    </h3>
+                    <ul class="space-y-4 text-xs">
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="mg_1">Deux oeufs, Tomates (Chakchouka)</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">22 DH</span>
+                        </li>
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="mg_2">Deux oeufs aux légumes sautés</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">25 DH</span>
+                        </li>
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="mg_3">Deux oeufs à la charcuterie</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">28 DH</span>
+                        </li>
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="mg_4">Deux oeufs à la saucisse</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">30 DH</span>
+                        </li>
+                        <li class="flex justify-between items-baseline">
+                            <span class="font-medium text-hp-ink" data-i18n="mg_5">Deux oeufs aux crevettes</span>
+                            <span class="fine-dots"></span>
+                            <span class="font-serif font-bold text-hp-kraft text-base">32 DH</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sección 4: Omelettes con Foto Real de Polaroid -->
+            <div class="art-card p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-6">
+                    <div class="md:col-span-8">
+                        <h3 class="font-script text-4xl sm:text-5xl text-hp-ink" data-i18n="cat_omelettes">Omelettes</h3>
+                        <p class="text-xs text-hp-stone mt-1 font-light" data-i18n="desc_omelettes">Préparées avec amour, dorées et fondantes selon votre envie.</p>
+                    </div>
+                    <!-- Foto Real de Omelette -->
+                    <div class="md:col-span-4 flex justify-center">
+                        <div class="polaroid-art rotate-2 max-w-[220px]">
+                            <div class="tape-effect"></div>
+                            <img src="assets/dish_omelette.jpg" alt="Omelette dorée réelle" class="w-full h-32 object-cover rounded">
+                            <p class="font-script text-xl text-center text-hp-kraft-dark mt-2" data-i18n="caption_omelette">Savourez...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de 8 Omelettes -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3.5 text-xs pt-4 border-t border-hp-gold/15">
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_1">Omelette Nature / Aux herbes</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">18 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_2">Omelette Fromage Edam</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">22 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_3">Omelette Fromage Dinde Fumée</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">24 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_4">Omelette Végétarienne</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">24 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_5">Omelette Champignons</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">24 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_6">Omelette au Thon</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">28 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_7">Omelette au Khlie</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">30 DH</span>
+                    </div>
+                    <div class="flex justify-between items-baseline py-1">
+                        <span class="font-medium text-hp-ink" data-i18n="om_8">Omelette Crevette</span>
+                        <span class="fine-dots"></span>
+                        <span class="font-serif font-bold text-hp-kraft text-base">30 DH</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 5: Extras -->
+            <div class="art-card p-6">
+                <h3 class="font-script text-3xl text-hp-ink mb-4 pb-2 border-b border-hp-gold/20 flex items-center justify-between" data-i18n="cat_extras">
+                    Extras & Douceurs
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 text-xs">
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_1">Vache qui rit / Kiri</span><strong class="font-serif text-hp-kraft text-sm">4 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_2">Miel</span><strong class="font-serif text-hp-kraft text-sm">4 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_3">Confiture</span><strong class="font-serif text-hp-kraft text-sm">4 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_4">Fromage</span><strong class="font-serif text-hp-kraft text-sm">4 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_5">Beurre</span><strong class="font-serif text-hp-kraft text-sm">4 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span class="text-amber-800 font-semibold" data-i18n="ex_6">Amlou</span><strong class="font-serif text-hp-kraft text-sm">7 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_7">Nutella</span><strong class="font-serif text-hp-kraft text-sm">7 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_8">Mortadela</span><strong class="font-serif text-hp-kraft text-sm">7 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_9">Fromage Edam</span><strong class="font-serif text-hp-kraft text-sm">12 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_10">Dinde Fumée</span><strong class="font-serif text-hp-kraft text-sm">12 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_11">Thon</span><strong class="font-serif text-hp-kraft text-sm">12 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span data-i18n="ex_12">Manchego</span><strong class="font-serif text-hp-kraft text-sm">12 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span class="text-rose-800 font-semibold" data-i18n="ex_13">Saumon</span><strong class="font-serif text-hp-kraft text-sm">20 DH</strong></div>
+                    <div class="flex justify-between p-2.5 rounded-xl bg-hp-cream/60 border border-hp-gold/15"><span class="text-amber-900 font-semibold" data-i18n="ex_14">Khlie</span><strong class="font-serif text-hp-kraft text-sm">20 DH</strong></div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Pie de Página Artístico -->
+    <footer class="text-center mt-20 pt-10 pb-8 border-t border-hp-kraft/20 text-xs text-hp-stone">
+        <img src="assets/logo.jpg" alt="Logo" class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-hp-gold/40 shadow-sm mb-3">
+        <p class="font-cinzel text-sm font-bold text-hp-ink tracking-wider">HOUSE PUBLIQUE</p>
+        <p class="font-script text-2xl text-hp-kraft mt-0.5">« Savourez chaque instant »</p>
+        <p class="text-[10px] text-hp-stone/60 mt-4 uppercase tracking-widest">© 2026 House Publique. Café & Restaurant. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Lógica de Pestañas e Idiomas -->
+    <script>
+        const translations = {
+            fr: {
+                tagline: "Café — Restaurant",
+                menu_title: "Menu Petit Dej",
+                fresh_coffee: "Barista Passion",
+                coffee_sub: "Espresso & cafés de terroir",
+                slogan: "« Un bon matin commence par une touche gourmande. Savourez chaque instant ! »",
+                tab_formules: "Formules Petit Déj",
+                tab_alacarte: "À la Carte",
+                caption_toast: "L'art du petit déjeuner",
+                formulas_badge: "Formules Matinales Complètes",
+                formulas_heading: "Douceurs & Traditions du Matin",
+                formulas_desc: "Chaque formule est généreusement servie avec une boisson chaude au choix, un jus frais maison et de l'eau minérale pour bien commencer la journée.",
+                f_francaise: "Française",
+                d_francaise: "Assortiment de 3 mini viennoiseries, Nutella, confiture, boisson chaude au choix, jus maison, eau minérale.",
+                f_traditionnel: "Traditionnel",
+                d_traditionnel: "Harcha, baghrir, rghayef, miel, amlou, beurre, fromage traditionnel, huile d'olive, olive, boisson chaude, eau minérale, jus de maison.",
+                f_tetouani: "Tétouani",
+                d_tetouani: "Deux oeufs au choix, assortiment de charcuterie, mortadelle, la vache qui rit, fromage traditionnel, huile d'olive, olive, boisson chaude, eau minérale, jus de maison.",
+                f_fassi: "Fassi",
+                d_fassi: "Deux oeufs au choix, khlie, olive, huile d'olive, boisson chaude, eau minérale, jus de maison.",
+                f_espagnol: "Espagnol",
+                d_espagnol: "Pain céréales grillé, tomate, épices, fromage manchego, tapenade, thon, avocat, huile d'olive, olive, jus maison, eau minérale.",
+                f_fitness: "Fitness",
+                d_fitness: "Bol de yaourt fait maison, fruits de saison, fruits, pain grillé, tapenade, fromage traditionnel, mini detox.",
+                f_british: "British",
+                d_british: "Deux oeufs au choix, saucisse grillée, haricots rouges, tomate, champignons, dinde fumée, fromage edam, eau minérale, jus maison, huile d'olive, olive.",
+                f_lacasa: "La Casa",
+                d_lacasa: "Pain céréales grillé, assortiment de charcuterie, oeufs à la coque, fromage traditionnel, Kiri, beurre, confiture, bol de yaourt, fruits de saison, huile d'olive, olive, eau minérale, jus de maison.",
+                f_brunch: "Le Brunch",
+                d_brunch: "Toast céréales au fromage, pancakes, 2 assortiments de viennoiseries, assortiment de pain, omelette nature, pain perdu nature, bol de yaourt, fruits de saison, fruits, huile d'olive, olive, eau minérale, jus de maison ou mini detox.",
+                caption_friends: "Moments partagés en famille ou entre amis",
+                cat_pains: "Options de Pain",
+                sub_pains: "Chauds & croustillants",
+                p_1: "Pain Complet", p_2: "Pain d'Orge", p_3: "Pain Maqla", p_4: "Pain Maqla Complet", p_5: "Rghayef", p_6: "Harcha", p_7: "Harcha d'Orge", p_8: "Baghrir", p_9: "Mlaoui", p_10: "Baguette",
+                comp_1: "Composition 1",
+                d_comp_sub: "Servi avec deux accompagnements au choix :",
+                d_comp_1: "Huile d'olive, oeuf, miel, beurre, fromage traditionnel, confiture, Kiri, vache qui rit.",
+                comp_2: "Composition 2",
+                d_comp_2: "Nutella, amlou, dinde fumée, fromage edam, suprême de dinde, salami de dinde, fromage manchego, avocat, thon.",
+                cat_chamali: "Options Chamali",
+                chamali_sub: "Saveurs Authentiques du Nord",
+                ch_1: "Petit Déjeuner Chamali 1",
+                d_ch_1: "Pain complet, oeufs, fromage traditionnel, huile d'olive.",
+                ch_2: "Petit Déjeuner Chamali 2",
+                d_ch_2: "Pain complet, oeufs, fromage traditionnel, fromage edam, huile d'olive.",
+                ch_3: "Petit Déjeuner Chamali 3",
+                d_ch_3: "Pain complet, oeufs, fromage traditionnel, fromage edam, dinde fumée, huile d'olive.",
+                cat_oeufs: "Les Oeufs",
+                acc_fromage: "Accompagnements : fromage traditionnel, la vache qui rit",
+                oeuf_1: "Oeuf au plat",
+                oeuf_2: "Deux oeufs au plat",
+                oeuf_3: "Oeuf au plat spécial",
+                oeuf_4: "Deux oeufs au plat spécial",
+                cat_mgilats: "Mgilats",
+                mg_1: "Deux oeufs, Tomates (Chakchouka)",
+                mg_2: "Deux oeufs aux légumes sautés",
+                mg_3: "Deux oeufs à la charcuterie",
+                mg_4: "Deux oeufs à la saucisse",
+                mg_5: "Deux oeufs aux crevettes",
+                cat_omelettes: "Omelettes",
+                desc_omelettes: "Préparées avec amour, dorées et fondantes selon votre envie.",
+                caption_omelette: "Savourez...",
+                om_1: "Omelette Nature / Aux herbes",
+                om_2: "Omelette Fromage Edam",
+                om_3: "Omelette Fromage Dinde Fumée",
+                om_4: "Omelette Végétarienne",
+                om_5: "Omelette Champignons",
+                om_6: "Omelette au Thon",
+                om_7: "Omelette au Khlie",
+                om_8: "Omelette Crevette",
+                cat_extras: "Extras & Douceurs",
+                ex_1: "Vache qui rit / Kiri", ex_2: "Miel", ex_3: "Confiture", ex_4: "Fromage", ex_5: "Beurre",
+                ex_6: "Amlou", ex_7: "Nutella", ex_8: "Mortadela", ex_9: "Fromage Edam", ex_10: "Dinde Fumée",
+                ex_11: "Thon", ex_12: "Manchego", ex_13: "Saumon", ex_14: "Khlie",
+                tag_douceur: "Douceur Parisienne", tag_beldi: "Saveurs Beldi", tag_nord: "Tradition du Nord",
+                tag_khlie: "Au Khlie Artisanal", tag_ibere: "Méditerranéen", tag_healthy: "Vitalité & Équilibre",
+                tag_copieux: "Anglais Gourmand", tag_signature: "Signature Maison", tag_fete: "Le Grand Festin"
+            },
+            es: {
+                tagline: "Café — Restaurante",
+                menu_title: "Menú Desayuno",
+                fresh_coffee: "Pasión Barista",
+                coffee_sub: "Espresso y cafés selectos",
+                slogan: "« Una buena mañana comienza con un toque gourmet. ¡Saborea cada momento! »",
+                tab_formules: "Fórmulas Desayuno",
+                tab_alacarte: "A la Carta",
+                caption_toast: "El arte del desayuno",
+                formulas_badge: "Fórmulas Matinales Completas",
+                formulas_heading: "Dulces y Tradiciones de la Mañana",
+                formulas_desc: "Cada fórmula se sirve generosamente con bebida caliente a elegir, zumo fresco casero y agua mineral para empezar bien el día.",
+                f_francaise: "Francesa",
+                d_francaise: "Surtido de 3 mini bollerías, Nutella, mermelada, bebida caliente a elegir, zumo casero, agua mineral.",
+                f_traditionnel: "Tradicional",
+                d_traditionnel: "Harcha, baghrir, rghayef, miel, amlou, mantequilla, queso tradicional, aceite de oliva, aceitunas, bebida caliente, agua mineral, zumo casero.",
+                f_tetouani: "Tetuani",
+                d_tetouani: "Dos huevos a elegir, surtido de embutidos, mortadela, La Vaca que Ríe, queso tradicional, aceite de oliva, aceitunas, bebida caliente, agua mineral, zumo casero.",
+                f_fassi: "Fassi",
+                d_fassi: "Dos huevos a elegir, khlea, aceitunas, aceite de oliva, bebida caliente, agua mineral, zumo casero.",
+                f_espagnol: "Española",
+                d_espagnol: "Pan de cereales tostado, tomate, especias, queso manchego, tapenade, atún, aguacate, aceite de oliva, aceitunas, zumo casero, agua mineral.",
+                f_fitness: "Fitness",
+                d_fitness: "Bol de yogur casero, frutas de temporada, frutos secos, pan tostado, tapenade, queso tradicional, mini detox.",
+                f_british: "Británica",
+                d_british: "Dos huevos a elegir, salchicha a la parrilla, alubias rojas, tomate, champiñones, pavo ahumado, queso edam, agua mineral, zumo casero, aceite de oliva, aceitunas.",
+                f_lacasa: "La Casa",
+                d_lacasa: "Pan de cereales tostado, surtido de embutidos, huevos pasados por agua, queso tradicional, Kiri, mantequilla, mermelada, bol de yogur, frutas de temporada, aceite de oliva, aceitunas, agua mineral, zumo casero.",
+                f_brunch: "El Brunch",
+                d_brunch: "Tostada de cereales con queso, tortitas, 2 surtidos de bollería, surtido de pan, tortilla francesa, tostada francesa clásica, bol de yogur, frutas de temporada, frutos secos, aceite de oliva, aceitunas, agua mineral, zumo casero o mini detox.",
+                caption_friends: "Momentos compartidos en familia o con amigos",
+                cat_pains: "Opciones de Pan",
+                sub_pains: "Recién horneados y crujientes",
+                p_1: "Pan Integral", p_2: "Pan de Cebada", p_3: "Pan Maqla", p_4: "Pan Maqla Integral", p_5: "Rghayef", p_6: "Harcha", p_7: "Harcha de Cebada", p_8: "Baghrir", p_9: "Mlaoui", p_10: "Baguette",
+                comp_1: "Composición 1",
+                d_comp_sub: "Servido con dos acompañamientos a elegir:",
+                d_comp_1: "Aceite de oliva, huevo, miel, mantequilla, queso tradicional, mermelada, Kiri, La Vaca que Ríe.",
+                comp_2: "Composición 2",
+                d_comp_2: "Nutella, amlou, pavo ahumado, queso edam, suprema de pavo, salami de pavo, manchego, aguacate, atún.",
+                cat_chamali: "Opciones Chamali",
+                chamali_sub: "Sabores Auténticos del Norte",
+                ch_1: "Desayuno Chamali 1",
+                d_ch_1: "Pan integral, huevos, queso tradicional, aceite de oliva.",
+                ch_2: "Desayuno Chamali 2",
+                d_ch_2: "Pan integral, huevos, queso tradicional, queso edam, aceite de oliva.",
+                ch_3: "Desayuno Chamali 3",
+                d_ch_3: "Pan integral, huevos, queso tradicional, queso edam, pavo ahumado, aceite de oliva.",
+                cat_oeufs: "Los Huevos",
+                acc_fromage: "Acompañamientos: queso tradicional, La Vaca que Ríe",
+                oeuf_1: "Huevo frito",
+                oeuf_2: "Dos huevos fritos",
+                oeuf_3: "Huevo frito especial",
+                oeuf_4: "Dos huevos fritos especiales",
+                cat_mgilats: "Mgilats (Sartenes Calientes)",
+                mg_1: "Dos huevos, Tomates (Shakshuka)",
+                mg_2: "Dos huevos con verduras salteadas",
+                mg_3: "Dos huevos con embutidos",
+                mg_4: "Dos huevos con salchicha",
+                mg_5: "Dos huevos con gambas",
+                cat_omelettes: "Tortillas",
+                desc_omelettes: "Elaboradas con cariño, jugosas y doradas a tu gusto.",
+                caption_omelette: "Saborea...",
+                om_1: "Tortilla Francesa / Con hierbas",
+                om_2: "Tortilla de Queso Edam",
+                om_3: "Tortilla de Queso y Pavo Ahumado",
+                om_4: "Tortilla Vegetariana",
+                om_5: "Tortilla de Champiñones",
+                om_6: "Tortilla de Atún",
+                om_7: "Tortilla de Khlea",
+                om_8: "Tortilla de Gambas",
+                cat_extras: "Extras y Dulces",
+                ex_1: "La Vaca que Ríe / Kiri", ex_2: "Miel", ex_3: "Mermelada", ex_4: "Queso", ex_5: "Mantequilla",
+                ex_6: "Amlou", ex_7: "Nutella", ex_8: "Mortadela", ex_9: "Queso Edam", ex_10: "Pavo Ahumado",
+                ex_11: "Atún", ex_12: "Manchego", ex_13: "Salmón", ex_14: "Khlea",
+                tag_douceur: "Dulzura Parisina", tag_beldi: "Sabores Beldi", tag_nord: "Tradición del Norte",
+                tag_khlie: "Con Khlea Artesanal", tag_ibere: "Mediterráneo", tag_healthy: "Vitalidad y Equilibrio",
+                tag_copieux: "Inglés Completo", tag_signature: "Firma de la Casa", tag_fete: "El Gran Festín"
+            },
+            ar: {
+                tagline: "مقهى — مطعم",
+                menu_title: "قائمة الإفطار الصباحي",
+                fresh_coffee: "شغف الباريستا",
+                coffee_sub: "إسبريسو وقهوة أصيلة",
+                slogan: "« صباح جميل يبدأ بلمسة لذيذة وشهية. استمتع بكل لحظة! »",
+                tab_formules: "وجبات الإفطار",
+                tab_alacarte: "حسب الطلب",
+                caption_toast: "فن الإفطار الصباحي",
+                formulas_badge: "وجبات صباحية متكاملة",
+                formulas_heading: "أصالة ولذة فطور الصباح",
+                formulas_desc: "تُقدم كل وجبة بسخاء مع مشروب ساخن من اختياركم، عصير طبيعي طازج ومياه معدنية لبدء يوم مفعم بالحيوية.",
+                f_francaise: "فرنسية",
+                d_francaise: "تشكيلة من 3 معجنات صغيرة، نوتيلا، مربى، مشروب ساخن من اختيارك، عصير منزلي، مياه معدنية.",
+                f_traditionnel: "تقليدية",
+                d_traditionnel: "حرشة، بغرير، رغيف، عسل، أملو، زبدة، جبن بلدي، زيت زيتون، زيتون، مشروب ساخن، مياه معدنية، عصير منزلي.",
+                f_tetouani: "تطوانية",
+                d_tetouani: "بيضتان من اختيارك، تشكيلة من اللحوم الباردة، مرتديلا، لافاش كيري، جبن بلدي، زيت زيتون، زيتون، مشروب ساخن، مياه معدنية، عصير منزلي.",
+                f_fassi: "فاسية",
+                d_fassi: "بيضتان من اختيارك، خليع، زيتون، زيت زيتون، مشروب ساخن، مياه معدنية، عصير منزلي.",
+                f_espagnol: "إسبانية",
+                d_espagnol: "خبز حبوب محمص، طماطم، بهارات، جبنة مانشيجو، تابيناد، تونة، أفوكادو، زيت زيتون، زيتون، عصير منزلي، مياه معدنية.",
+                f_fitness: "لياقة",
+                d_fitness: "وعاء زبادي منزلي، فواكه موسمية، فواكه مجففة، خبز محمص، تابيناد، جبن بلدي، ميني ديتوكس.",
+                f_british: "بريطانية",
+                d_british: "بيضتان من اختيارك، نقانق مشوية، فاصوليا حمراء، طماطم، فطر، ديك رومي مدخن، جبن إيدام، مياه معدنية، عصير منزلي، زيت زيتون، زيتون.",
+                f_lacasa: "الدار",
+                d_lacasa: "خبز حبوب محمص، تشكيلة لحوم باردة، بيض مسلوق، جبن بلدي، كيري، زبدة، مربى، وعاء زبادي، فواكه موسمية، زيت زيتون، زيتون، مياه معدنية، عصير منزلي.",
+                f_brunch: "البرانش",
+                d_brunch: "توست حبوب بالجبن، بان كيك، تشكيلتين من المعجنات، تشكيلة خبز، أومليت سادة، فرنش توست كلاسيكي، وعاء زبادي، فواكه موسمية، فواكه مجففة، زيت زيتون، زيتون، مياه معدنية، عصير منزلي أو ميني ديتوكس.",
+                caption_friends: "لحظات جميلة مشتركة مع العائلة والأصدقاء",
+                cat_pains: "خيارات الخبز",
+                sub_pains: "ساخن ومقرمش كل صباح",
+                p_1: "خبز القمح الكامل", p_2: "خبز الشعير", p_3: "خبز المقلة", p_4: "خبز المقلة بالقمح الكامل", p_5: "رغايف", p_6: "حرشة", p_7: "حرشة الشعير", p_8: "بغرير", p_9: "ملاوي", p_10: "باجيت",
+                comp_1: "تشكيلة 1",
+                d_comp_sub: "تقدم مع اختيارين من المرافقات:",
+                d_comp_1: "زيت زيتون، بيض، عسل، زبدة، جبن بلدي، مربى، كيري، لافاش كيري.",
+                comp_2: "تشكيلة 2",
+                d_comp_2: "نوتيلا، أملو، ديك رومي مدخن، جبن إيدام، صدر ديك رومي، سلامي ديك رومي، مانشيجو، أفوكادو، تونة.",
+                cat_chamali: "خيارات شمالية",
+                chamali_sub: "نكهات الشمال الأصيلة",
+                ch_1: "فطور شمالي 1",
+                d_ch_1: "خبز قمح كامل، بيض، جبن بلدي، زيت زيتون.",
+                ch_2: "فطور شمالي 2",
+                d_ch_2: "خبز قمح كامل، بيض، جبن بلدي، جبن إيدام، زيت زيتون.",
+                ch_3: "فطور شمالي 3",
+                d_ch_3: "خبز قمح كامل، بيض، جبن بلدي، جبن إيدام، ديك رومي مدخن، زيت زيتون.",
+                cat_oeufs: "أطباق البيض",
+                acc_fromage: "المرافقات: جبن بلدي، لافاش كيري",
+                oeuf_1: "بيضة مقلية",
+                oeuf_2: "بيضتان مقليتان",
+                oeuf_3: "بيضة مقلية خاصة",
+                oeuf_4: "بيضتان مقليتان خاصتان",
+                cat_mgilats: "مقيلات ساخنة",
+                mg_1: "بيضتان، طماطم (شكشوكة)",
+                mg_2: "بيضتان مع خضار سوتيه",
+                mg_3: "بيضتان باللحوم الباردة",
+                mg_4: "بيضتان بالنقانق",
+                mg_5: "بيضتان بالجمبري",
+                cat_omelettes: "أومليت جورميه",
+                desc_omelettes: "مجهزة بحب وبيض طازج لتستمتعوا بألذ مذاق.",
+                caption_omelette: "بالصحة والراحة...",
+                om_1: "أومليت سادة / بالأعشاب",
+                om_2: "أومليت بجبن إيدام",
+                om_3: "أومليت بالجبن والديك الرومي المدخن",
+                om_4: "أومليت نباتي",
+                om_5: "أومليت بالفطر",
+                om_6: "أومليت بالتونة",
+                om_7: "أومليت بالخليع",
+                om_8: "أومليت بالجمبري",
+                cat_extras: "إضافات ومرافقات",
+                ex_1: "لافاش كيري / كيري", ex_2: "عسل", ex_3: "مربى", ex_4: "جبن", ex_5: "زبدة",
+                ex_6: "أملو", ex_7: "نوتيلا", ex_8: "مرتديلا", ex_9: "جبن إيدام", ex_10: "ديك رومي مدخن",
+                ex_11: "تونة", ex_12: "مانشيجو", ex_13: "سلمون", ex_14: "خليع",
+                tag_douceur: "لمسة فرنسية", tag_beldi: "نكهة بلدية", tag_nord: "تقاليد الشمال",
+                tag_khlie: "بالخليع الفاسي", tag_ibere: "متوسطي", tag_healthy: "صحي ومتوازن",
+                tag_copieux: "إنجليزي متكامل", tag_signature: "طبق الدار الخاص", tag_fete: "وليمة فاخرة"
+            },
+            en: {
+                tagline: "Café — Restaurant",
+                menu_title: "Breakfast Menu",
+                fresh_coffee: "Barista Passion",
+                coffee_sub: "Espresso & specialty coffees",
+                slogan: "« A good morning begins with a gourmet touch. Savor every moment! »",
+                tab_formules: "Breakfast Combos",
+                tab_alacarte: "A la Carte",
+                caption_toast: "The art of breakfast",
+                formulas_badge: "Full Morning Combos",
+                formulas_heading: "Morning Delights & Traditions",
+                formulas_desc: "Each formula is generously served with your choice of hot drink, fresh homemade juice, and mineral water to start your day beautifully.",
+                f_francaise: "French",
+                d_francaise: "Assortment of 3 mini pastries, Nutella, jam, hot drink of choice, homemade juice, mineral water.",
+                f_traditionnel: "Traditional",
+                d_traditionnel: "Harcha, baghrir, rghayef, honey, amlou, butter, traditional cheese, olive oil, olives, hot drink, mineral water, homemade juice.",
+                f_tetouani: "Tetouani",
+                d_tetouani: "Two eggs of choice, cold cuts assortment, mortadella, The Laughing Cow, traditional cheese, olive oil, olives, hot drink, mineral water, homemade juice.",
+                f_fassi: "Fassi",
+                d_fassi: "Two eggs of choice, khlea, olives, olive oil, hot drink, mineral water, homemade juice.",
+                f_espagnol: "Spanish",
+                d_espagnol: "Toasted cereal bread, tomato, spices, manchego cheese, tapenade, tuna, avocado, olive oil, olives, homemade juice, mineral water.",
+                f_fitness: "Fitness",
+                d_fitness: "Homemade yogurt bowl, seasonal fruits, nuts, toasted bread, tapenade, traditional cheese, mini detox.",
+                f_british: "British",
+                d_british: "Two eggs of choice, grilled sausage, red beans, tomato, mushrooms, smoked turkey, edam cheese, mineral water, homemade juice, olive oil, olives.",
+                f_lacasa: "The House",
+                d_lacasa: "Toasted cereal bread, cold cuts assortment, soft-boiled eggs, traditional cheese, Kiri, butter, jam, yogurt bowl, seasonal fruits, olive oil, olives, mineral water, homemade juice.",
+                f_brunch: "The Brunch",
+                d_brunch: "Cereal toast with cheese, pancakes, 2 pastry assortments, bread assortment, plain omelet, classic french toast, yogurt bowl, seasonal fruits, nuts, olive oil, olives, mineral water, homemade juice or mini detox.",
+                caption_friends: "Cherished moments with family and friends",
+                cat_pains: "Bread Options",
+                sub_pains: "Warm & freshly baked",
+                p_1: "Whole Wheat Bread", p_2: "Barley Bread", p_3: "Maqla Bread", p_4: "Whole Wheat Maqla", p_5: "Rghayef", p_6: "Harcha", p_7: "Barley Harcha", p_8: "Baghrir", p_9: "Mlaoui", p_10: "Baguette",
+                comp_1: "Composition 1",
+                d_comp_sub: "Served with two sides of choice:",
+                d_comp_1: "Olive oil, egg, honey, butter, traditional cheese, jam, Kiri, laughing cow.",
+                comp_2: "Composition 2",
+                d_comp_2: "Nutella, amlou, smoked turkey, edam cheese, turkey supreme, turkey salami, manchego, avocado, tuna.",
+                cat_chamali: "Chamali Options",
+                chamali_sub: "Northern Authentic Flavors",
+                ch_1: "Chamali Breakfast 1",
+                d_ch_1: "Whole wheat bread, eggs, traditional cheese, olive oil.",
+                ch_2: "Chamali Breakfast 2",
+                d_ch_2: "Whole wheat bread, eggs, traditional cheese, edam cheese, olive oil.",
+                ch_3: "Chamali Breakfast 3",
+                d_ch_3: "Whole wheat bread, eggs, traditional cheese, edam cheese, smoked turkey, olive oil.",
+                cat_oeufs: "Eggs",
+                acc_fromage: "Sides: traditional cheese, laughing cow",
+                oeuf_1: "Fried egg",
+                oeuf_2: "Two fried eggs",
+                oeuf_3: "Special fried egg",
+                oeuf_4: "Two special fried eggs",
+                cat_mgilats: "Mgilats (Sizzling Pans)",
+                mg_1: "Two eggs, Tomatoes (Shakshuka)",
+                mg_2: "Two eggs with sautéed vegetables",
+                mg_3: "Two eggs with cold cuts",
+                mg_4: "Two eggs with sausage",
+                mg_5: "Two eggs with shrimp",
+                cat_omelettes: "Gourmet Omelets",
+                desc_omelettes: "Cooked to order with farm-fresh eggs and your favorite fillings.",
+                caption_omelette: "Enjoy...",
+                om_1: "Plain Omelet / With herbs",
+                om_2: "Edam Cheese Omelet",
+                om_3: "Cheese & Smoked Turkey Omelet",
+                om_4: "Vegetarian Omelet",
+                om_5: "Mushroom Omelet",
+                om_6: "Tuna Omelet",
+                om_7: "Khlea Omelet",
+                om_8: "Shrimp Omelet",
+                cat_extras: "Extras & Delights",
+                ex_1: "Laughing Cow / Kiri", ex_2: "Honey", ex_3: "Jam", ex_4: "Cheese", ex_5: "Butter",
+                ex_6: "Amlou", ex_7: "Nutella", ex_8: "Mortadella", ex_9: "Edam Cheese", ex_10: "Smoked Turkey",
+                ex_11: "Tuna", ex_12: "Manchego", ex_13: "Salmon", ex_14: "Khlea",
+                tag_douceur: "Parisian Sweetness", tag_beldi: "Beldi Flavors", tag_nord: "Northern Tradition",
+                tag_khlie: "Artisanal Khlea", tag_ibere: "Mediterranean", tag_healthy: "Vitality & Balance",
+                tag_copieux: "Hearty British", tag_signature: "House Signature", tag_fete: "The Grand Feast"
+            }
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(tabId);
+            target.classList.remove('hidden');
+            target.classList.remove('animate-fade-in');
+            void target.offsetWidth; // Trigger reflow for animation
+            target.classList.add('animate-fade-in');
+
+            document.querySelectorAll('.tab-art').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId === 'tab-formules' ? 'btn-tab-formules' : 'btn-tab-alacarte').classList.add('active');
+        }
+
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('.lang-link').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${lang}`).classList.add('active');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>

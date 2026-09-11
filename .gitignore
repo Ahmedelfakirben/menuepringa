@@ -1,0 +1,10 @@
+# Fotos WhatsApp (no forman parte del menú)
+WhatsApp Image*.jpeg
+WhatsApp Image*.jpg
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

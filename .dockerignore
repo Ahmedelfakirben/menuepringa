@@ -1,0 +1,19 @@
+# ── Archivos temporales y del sistema ──
+.DS_Store
+Thumbs.db
+*.log
+
+# ── Git ──
+.git
+.gitignore
+
+# ── Fotos WhatsApp (no forman parte del menú) ──
+WhatsApp Image*.jpeg
+WhatsApp Image*.jpg
+
+# ── index.html (versión antigua, no usada) ──
+index.html
+
+# ── Archivos de configuración que no van al contenedor ──
+README*
+*.md
