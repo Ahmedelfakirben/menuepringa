@@ -183,9 +183,76 @@
             font-weight: 700;
             background: rgba(178, 138, 67, 0.12);
         }
+
+        /* ═══ PRELOADER ELEGANTE DE BIENVENIDA ═══ */
+        #hp-loader {
+            background-color: #F8F4EB;
+            background-image: 
+                radial-gradient(rgba(178, 138, 67, 0.12) 1px, transparent 0),
+                linear-gradient(180deg, #F8F4EB 0%, #F1E9D7 100%);
+            background-size: 24px 24px, 100% 100%;
+            transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s;
+        }
+
+        #hp-loader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.03);
+            pointer-events: none;
+        }
+
+        @keyframes loaderProgress {
+            0% { width: 0%; }
+            45% { width: 65%; }
+            85% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        .hp-loader-progress {
+            animation: loaderProgress 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
     </style>
 </head>
 <body class="min-h-screen pb-20">
+
+    <!-- ═══ PRELOADER ELEGANTE DE BIENVENIDA (SPLASH SCREEN) ═══ -->
+    <div id="hp-loader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center select-none" aria-hidden="false">
+        <div class="relative flex flex-col items-center px-6 py-8">
+            
+            <!-- Anillos orbitales dorados con el Logo central -->
+            <div class="relative w-28 h-28 flex items-center justify-center mb-5">
+                <!-- Anillo exterior punteado suave girando despacio -->
+                <div class="absolute inset-0 rounded-full border border-dashed border-hp-gold/40 animate-spin" style="animation-duration: 12s;"></div>
+                <!-- Anillo activo con gradiente dorado -->
+                <div class="absolute -inset-1 rounded-full border-2 border-transparent border-t-hp-gold border-r-hp-kraft animate-spin" style="animation-duration: 1.8s;"></div>
+                <!-- Resplandor dorado de fondo -->
+                <div class="absolute inset-2 bg-hp-gold/20 rounded-full blur-md"></div>
+                
+                <!-- Logo del café con sombra y borde blanco -->
+                <img src="assets/logo.jpg" alt="House Publique" class="relative w-20 h-20 rounded-full object-cover shadow-lg border-2 border-white/90">
+            </div>
+
+            <!-- Título y Eslogan -->
+            <h2 class="font-cinzel text-xl sm:text-2xl font-bold tracking-[0.25em] text-hp-ink text-center mb-1">
+                HOUSE PUBLIQUE
+            </h2>
+            <p class="font-script text-2xl sm:text-3xl text-hp-kraft text-center mb-4">
+                « Savourez chaque instant »
+            </p>
+
+            <!-- Barra de progreso artesanal dorada -->
+            <div class="w-40 h-1 bg-hp-kraft/15 rounded-full overflow-hidden mb-3 relative">
+                <div class="hp-loader-progress h-full bg-gradient-to-r from-hp-gold via-hp-gold-bright to-hp-kraft rounded-full"></div>
+            </div>
+
+            <!-- Detalle simpático: Taza de café con bienvenida -->
+            <div class="flex items-center gap-2 text-hp-stone/80 text-xs tracking-wider">
+                <i class="fa-solid fa-mug-hot text-hp-gold text-sm animate-pulse"></i>
+                <span class="font-medium text-[11px] uppercase tracking-widest text-hp-kraft-dark">Bienvenue</span>
+                <span class="text-hp-gold text-xs">✦</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Barra Superior Flotante: Marca e Idiomas -->
     <header class="sticky top-0 z-50 bg-[#F8F4EB]/90 backdrop-blur-md border-b border-hp-kraft/20 py-2.5 px-4 transition-all">
@@ -1119,6 +1186,27 @@
                 }
             });
         }
+
+        // ═══ GESTIÓN DEL LOADER / BIENVENIDA ═══
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('hp-loader');
+            if (loader) {
+                // Tiempo agradable (800ms) para apreciar la animación sin hacer esperar al cliente
+                setTimeout(() => {
+                    loader.classList.add('loaded');
+                    setTimeout(() => loader.remove(), 600);
+                }, 850);
+            }
+        });
+
+        // Respaldo de seguridad por si alguna fuente o recurso externo se retrasa
+        setTimeout(() => {
+            const loader = document.getElementById('hp-loader');
+            if (loader && !loader.classList.contains('loaded')) {
+                loader.classList.add('loaded');
+                setTimeout(() => loader.remove(), 600);
+            }
+        }, 2200);
     </script>
 </body>
 </html>
